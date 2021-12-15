@@ -1,37 +1,9 @@
-// import org.apache.hadoop.mapreduce.TestMapCollection.StepFactory;
-
-
-/*
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.PropertiesCredentials;
-import com.amazonaws.services.elasticmapreduce.AmazonElasticMapReduce;
-
-
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
-import com.amazonaws.services.ec2.AmazonEC2;
-import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
-import com.amazonaws.services.ec2.model.InstanceType;
-import com.amazonaws.services.elasticmapreduce.AmazonElasticMapReduceClient;
-import com.amazonaws.services.elasticmapreduce.AmazonElasticMapReduceClientBuilder;
-import com.amazonaws.services.elasticmapreduce.model.*;
-import com.amazonaws.services.elasticmapreduce.util.StepFactory;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
- */
-
 // For the NEW SDK (V2):
 import software.amazon.awssdk.services.emr.EmrClient;
-import software.amazon.awssdk.services.emr.model.RunJobFlowResponse;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.emr.model.*;
 import software.amazon.awssdk.services.ec2.model.InstanceType;
 import software.amazon.awssdk.services.s3.S3Client;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 
 public class Main {
@@ -65,12 +37,16 @@ public class Main {
                 .region(Region.US_EAST_1)
                 .build();
 
-        // Print list of clusters (???).
+        /*
+        // Print list of clusters (see AWS specification for this).
         System.out.println( emr.listClusters());
+         */
 
 		/*
-        step1
+        step 1
+        Add Short explanation of the functionality of step 1.
 		 */
+
 
         HadoopJarStepConfig step1 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step1.jar")
@@ -85,7 +61,8 @@ public class Main {
                 .build();
 
 		/*
-        step2
+        step 2
+        Add Short explanation of the functionality of step 2.
 		 */
         HadoopJarStepConfig step2 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step2.jar")
@@ -98,7 +75,8 @@ public class Main {
                 .actionOnFailure("TERMINATE_JOB_FLOW")
                 .build();
 		/*
-        step3
+        step 3
+        Add Short explanation of the functionality of step 3.
 		 */
         HadoopJarStepConfig step3 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step3.jar")
@@ -111,7 +89,8 @@ public class Main {
                 .actionOnFailure("TERMINATE_JOB_FLOW")
                 .build();
 		/*
-        step4
+        step 4
+        Add Short explanation of the functionality of step 4.
 		 */
         HadoopJarStepConfig step4 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step4.jar")
@@ -124,7 +103,8 @@ public class Main {
                 .actionOnFailure("TERMINATE_JOB_FLOW")
                 .build();
 		/*
-        step5
+        step 5
+        Add Short explanation of the functionality of step 5.
 		 */
         HadoopJarStepConfig step5 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step5.jar")
@@ -137,7 +117,8 @@ public class Main {
                 .actionOnFailure("TERMINATE_JOB_FLOW")
                 .build();
 		/*
-        step6
+        step 6
+        Add Short explanation of the functionality of step 6.
 		 */
         HadoopJarStepConfig step6 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step6.jar")
