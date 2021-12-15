@@ -40,44 +40,8 @@ public class Main {
 
     public static void main(String[] args){
 
-/*
-Meni's code (example)
-        AWSCredentials credentials = new PropertiesCredentials();
-        AmazonElasticMapReduce mapReduce = new AmazonElasticMapReduceClient(credentials);
-        HadoopJarStepConfig hadoopJarStep = new HadoopJarStepConfig()
-                .withJar("s3n://yourbucket/yourfile.jar") // This should be a full map reduce application.
-                .withMainClass("some.pack.MainClass")
-                .withArgs("s3n://yourbucket/input/", "s3n://yourbucket/output/");
-
-        StepConfig stepConfig = new StepConfig()
-                .withName("stepname")
-                .withHadoopJarStep(hadoopJarStep)
-                .withActionOnFailure("TERMINATE_JOB_FLOW");
-
-        JobFlowInstancesConfig instances = new JobFlowInstancesConfig()
-                .withInstanceCount(2)
-                .withMasterInstanceType(InstanceType.M4Large.toString())
-                .withSlaveInstanceType(InstanceType.M4Large.toString())
-                .withHadoopVersion("2.6.0")
-                .withEc2KeyName("yourkey")
-                .withKeepJobFlowAliveWhenNoSteps(false)
-                .withPlacement(new PlacementType("us-east-1a"));
-
-        RunJobFlowRequest runFlowRequest = new RunJobFlowRequest()
-                .withName("jobname")
-                .withInstances(instances)
-                .withSteps(stepConfig)
-                .withLogUri("s3n://yourbucket/logs/");
-
-        RunJobFlowResult runJobFlowResult = mapReduce.runJobFlow(runFlowRequest);
-        String jobFlowId = runJobFlowResult.getJobFlowId();
-        System.out.println("Ran job flow with id: " + jobFlowId);
- */
-
-
-
-
-        // credentialsProvider = new EnvironmentVariableCredentialsProvider();
+        // Regarding "CredentialsProvider" (used by Meni) - I don't think we need it, but if we do
+        // It's not that hard to add I think, just be aware that we may need it.
 
         // Bucket name.
         String bucketName = "razalmog2211";
@@ -86,23 +50,15 @@ Meni's code (example)
                 .region(Region.US_EAST_1)
                 .build();
 
-        /*
+/*
+        Add this if necessary.
+
         //delete the output file if it exist
         ObjectListing objects = S3.listObjects(bucketName, "outputAssignment2");
         for (S3ObjectSummary s3ObjectSummary : objects.getObjectSummaries()) {
             S3.deleteObject(bucketName, s3ObjectSummary.getKey());
         }
-
-        ec2 = AmazonEC2ClientBuilder.standard()
-                .withCredentials(credentialsProvider)
-                .withRegion("us-west-2")
-                .build();
-
-        emr= AmazonElasticMapReduceClientBuilder.standard()
-                .withCredentials(credentialsProvider)
-                .withRegion("us-west-2")
-                .build();
-        */
+*/
 
         System.out.println("Instantiating EMR instance!");
         EmrClient emrClient = EmrClient.builder()
@@ -112,13 +68,6 @@ Meni's code (example)
         // Print list of clusters (???).
         System.out.println( emr.listClusters());
 
-
-        /*
-        Notice that there is also the function "stepFactory(String bucket)" in com.amazonaws.services.elasticmapreduce.util.
-        Maybe it is better for us. This one sets the bucket to: "us-east-1.elasticmapreduce".
-        !@#!@#!@#
-        */
-        //StepFactory stepFactory = new StepFactory();
 		/*
         step1
 		 */
@@ -134,17 +83,6 @@ Meni's code (example)
                 .name("Step1")
                 .actionOnFailure("TERMINATE_JOB_FLOW")
                 .build();
-/* Old version
-
-        HadoopJarStepConfig step1 = new HadoopJarStepConfig()
-                .withJar("s3://" + bucketName + "/step1.jar")
-                .withArgs("step1","null","s3n://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data");
-
-        StepConfig stepOne = new StepConfig()
-                .withName("step1")
-                .withHadoopJarStep(step1)
-                .withActionOnFailure("TERMINATE_JOB_FLOW");
- */
 
 		/*
         step2
@@ -245,6 +183,40 @@ Meni's code (example)
         String id = res.jobFlowId();
         System.out.println("JobFlow Id: "+id);
 
+
+        /*
+Meni's code (example)
+        AWSCredentials credentials = new PropertiesCredentials();
+        AmazonElasticMapReduce mapReduce = new AmazonElasticMapReduceClient(credentials);
+        HadoopJarStepConfig hadoopJarStep = new HadoopJarStepConfig()
+                .withJar("s3n://yourbucket/yourfile.jar") // This should be a full map reduce application.
+                .withMainClass("some.pack.MainClass")
+                .withArgs("s3n://yourbucket/input/", "s3n://yourbucket/output/");
+
+        StepConfig stepConfig = new StepConfig()
+                .withName("stepname")
+                .withHadoopJarStep(hadoopJarStep)
+                .withActionOnFailure("TERMINATE_JOB_FLOW");
+
+        JobFlowInstancesConfig instances = new JobFlowInstancesConfig()
+                .withInstanceCount(2)
+                .withMasterInstanceType(InstanceType.M4Large.toString())
+                .withSlaveInstanceType(InstanceType.M4Large.toString())
+                .withHadoopVersion("2.6.0")
+                .withEc2KeyName("yourkey")
+                .withKeepJobFlowAliveWhenNoSteps(false)
+                .withPlacement(new PlacementType("us-east-1a"));
+
+        RunJobFlowRequest runFlowRequest = new RunJobFlowRequest()
+                .withName("jobname")
+                .withInstances(instances)
+                .withSteps(stepConfig)
+                .withLogUri("s3n://yourbucket/logs/");
+
+        RunJobFlowResult runJobFlowResult = mapReduce.runJobFlow(runFlowRequest);
+        String jobFlowId = runJobFlowResult.getJobFlowId();
+        System.out.println("Ran job flow with id: " + jobFlowId);
+ */
 
     }
 
