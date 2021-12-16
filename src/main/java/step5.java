@@ -36,9 +36,9 @@ public class step5 {
 			String[] words1 = strings[0].split(" ");
 			String w1 = words1[0];
 			String w2 = words1[1]; 
-			String w3= words1[2];
-			String[]words2=strings[1].split(" ");
-			int occur =0;
+			String w3 = words1[2];
+			String[] words2 = strings[1].split(" ");
+			int occur = 0;
 			Text text = new Text();
 			text.set(String.format("%s %s %s",w1,w2,w3));
 			if(words2.length>1){
@@ -69,7 +69,7 @@ public class step5 {
 	 *               program is good   0.6
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
-		public static Long c0=new  Long(0);
+		public static Long c0 = new  Long(0);
 		public static HashMap <String, Double> map= new HashMap<String,Double>();
 
 
@@ -137,7 +137,7 @@ public class step5 {
 						b2=true;
 					}
 				}
-				if(C1!=null&&N1!=null&&b1&&b2){
+				if(C1!=null && N1!=null && b1 && b2){
 					prob=(k3*(N3/C2))+((1-k3)*k2*(N2/C1))+((1-k3)*(1-k2)*(N1/c0));
 					newKey.set(String.format("%s %s %s",w1,w2,w3));
 					newVal.set(String.format("%s",prob));

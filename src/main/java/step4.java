@@ -32,7 +32,7 @@ public class step4 {
 			String w1 = words[0];
 			String w2 = words[1];   
 			int occur = Integer.parseInt(strings[1]) ;
-			Text text3=new Text();
+			Text text3 = new Text();
 			text3.set(String.format("%d",occur));
 			Text text = new Text();
 			text.set(String.format("%s %s",w1,w2));
