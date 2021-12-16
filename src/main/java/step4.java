@@ -102,7 +102,7 @@ public class step4 {
 	    
 	    public static void main(String[] args) throws Exception {
 			Configuration conf = new Configuration();
-			Job job = Job.getInstance(conf);
+			Job job = Job.getInstance(conf, "Some meaningful name!#$!@#$#@!$");
 			job.setJarByClass(step4.class);
 			job.setMapperClass(Map.class);
 			job.setReducerClass(Reduce.class);

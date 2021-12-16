@@ -88,7 +88,7 @@ public class step2 {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf);
+		Job job = Job.getInstance(conf, "2gram");
 		job.setJarByClass(step2.class);
 		job.setMapperClass(Map.class);
 		job.setCombinerClass(Reduce.class);

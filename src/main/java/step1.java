@@ -87,7 +87,7 @@ public class step1 {
 
     public static void main(String[] args) throws Exception, ClassNotFoundException, InterruptedException  {
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf);
+        Job job = Job.getInstance(conf, "1gram");
         job.setJarByClass(step1.class);
         job.setMapperClass(Map.class);
         job.setCombinerClass(Reduce.class);

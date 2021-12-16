@@ -70,9 +70,36 @@ public class step5 {
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
 		public static Long c0=new  Long(0);
-		public static HashMap <String, Double> map= new HashMap<String,Double>(); 
+		public static HashMap <String, Double> map= new HashMap<String,Double>();
+
+
+		public void setup(Reducer.Context context) throws IOException {
+			FileSystem fileSystem = FileSystem.get(context.getConfiguration());
+			RemoteIterator<LocatedFileStatus> it=fileSystem.listFiles(new Path("/output1"),false);
+			while(it.hasNext()){
+				LocatedFileStatus fileStatus=it.next();
+				if (fileStatus.getPath().getName().startsWith("part")){
+					FSDataInputStream InputStream = fileSystem.open(fileStatus.getPath());
+					BufferedReader reader = new BufferedReader(new InputStreamReader(InputStream, "UTF-8"));
+					String line=null;
+					String[] ones;
+					while ((line = reader.readLine()) != null){
+						ones = line.split("\t");
+						if(ones[0].equals("*")){
+							c0=Long.parseLong(ones[1]);
+						}
+						else{
+							map.put(ones[0], (double) Long.parseLong(ones[1]));
+						}
+					}
+					reader.close();
+				}
+			}
+		}
+
+
 		@Override
-		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {			
+		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 			String[] strings = key.toString().split(" ");
 			String w1 = strings[0];
 			String w2 = strings[1];
@@ -96,10 +123,10 @@ public class step5 {
 				if(s.length<2){
 					N3=(double) Long.parseLong(s[0]);
 					k3=(Math.log(N3+1)+1)/(Math.log(N3+1)+2);
-					
+
 				}
 				else{
-					if(s[0].equals(w1)&&s[1].equals(w2)){	
+					if(s[0].equals(w1)&&s[1].equals(w2)){
 						C2=(double) Long.parseLong(s[2]);
 						b1=true;
 					}
@@ -116,36 +143,12 @@ public class step5 {
 					newVal.set(String.format("%s",prob));
 					context.write(newKey, newVal);
 				}
-
-			}
-
-		}
-
-		public void setup(Reducer.Context context) throws IOException {  
-			FileSystem fileSystem = FileSystem.get(context.getConfiguration());
-			RemoteIterator<LocatedFileStatus> it=fileSystem.listFiles(new Path("/output1"),false);
-			while(it.hasNext()){
-				LocatedFileStatus fileStatus=it.next();
-				if (fileStatus.getPath().getName().startsWith("part")){
-					FSDataInputStream InputStream = fileSystem.open(fileStatus.getPath());
-					BufferedReader reader = new BufferedReader(new InputStreamReader(InputStream, "UTF-8"));
-					String line=null;
-					String[] ones;
-					while ((line = reader.readLine()) != null){
-						ones = line.split("\t");
-						if(ones[0].equals("*")){
-							c0=Long.parseLong(ones[1]);
-						}
-						else{
-							map.put(ones[0], (double) Long.parseLong(ones[1]));
-						}
-					}
-					reader.close();
-				}
 			}
 		}
+
+		// Add cleanup function (Do we need to?).
+
 	}
-
 
 
 	private static class myPartitioner extends Partitioner<Text, Text>{
@@ -158,7 +161,7 @@ public class step5 {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf);
+		Job job = Job.getInstance(conf, "Some meaningful name!@#$");
 		job.setJarByClass(step5.class);
 		job.setMapperClass(Map.class);
 		job.setReducerClass(Reduce.class);

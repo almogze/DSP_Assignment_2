@@ -26,7 +26,7 @@ public class Main {
         Add this if necessary.
 
         //delete the output file if it exist
-        ObjectListing objects = S3.listObjects(bucketName, "outputAssignment2");
+        ObjectListing objects = S3.listObjects(bucketName, "outputDSPAss2");
         for (S3ObjectSummary s3ObjectSummary : objects.getObjectSummaries()) {
             S3.deleteObject(bucketName, s3ObjectSummary.getKey());
         }
@@ -138,14 +138,14 @@ public class Main {
                 .slaveInstanceType(InstanceType.M4_LARGE.toString())
                 .hadoopVersion("2.7.3")
                 // PUT A NAME OF A KEYPAIR HERE!@#$!@#$!@#$
-                .ec2KeyName("some key name. put one please!")
+                .ec2KeyName("kp1")
                 // The bottom line may not be the one wanted, but it compiles.
                 // Just beware that this may be the cause of problems -- Check it.
                 .placement(PlacementType.builder().availabilityZone("us-east-1a").build())
                 .keepJobFlowAliveWhenNoSteps(false)
                 .build();
 
-        System.out.println("give the cluster all our steps");
+
         RunJobFlowRequest request = RunJobFlowRequest.builder()
                 .name("DSP_Ass_2")
                 .instances(instances)
@@ -160,13 +160,16 @@ public class Main {
 */
                 .build();
 
+        System.out.println("Sending the job...");
+
         RunJobFlowResponse res = emr.runJobFlow(request);
-        String id = res.jobFlowId();
-        System.out.println("JobFlow Id: "+id);
+        String jobFlowId = res.jobFlowId();
+        System.out.println("Ran JobFlow with id: " + jobFlowId);
 
 
         /*
 Meni's code (example)
+
         AWSCredentials credentials = new PropertiesCredentials();
         AmazonElasticMapReduce mapReduce = new AmazonElasticMapReduceClient(credentials);
         HadoopJarStepConfig hadoopJarStep = new HadoopJarStepConfig()
