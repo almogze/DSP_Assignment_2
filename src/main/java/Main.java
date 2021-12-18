@@ -1,4 +1,4 @@
-// For the NEW SDK (V2):
+
 import software.amazon.awssdk.services.emr.EmrClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.emr.model.*;
@@ -33,7 +33,7 @@ public class Main {
 */
 
         System.out.println("Instantiating EMR instance!");
-        EmrClient emrClient = EmrClient.builder()
+        emr = EmrClient.builder()
                 .region(Region.US_EAST_1)
                 .build();
 
@@ -49,15 +49,17 @@ public class Main {
 
 
         HadoopJarStepConfig step1 = HadoopJarStepConfig.builder()
-                .jar("s3://" + bucketName + "/Step1.jar")
+                .jar("s3://" + bucketName + "/step1.jar")
                 //.mainClass(myClass)
-                .args("step1","null","s3://razalmog2211/test_text.txt")
+                // .args("step1","null","s3://razalmog2211/test_text.txt")
+                .args("step1", "s3://razalmog2211/test_text.txt")
+                .mainClass("step1")
                 .build();
 // s3n://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data
 
         StepConfig stepOne = StepConfig.builder()
                 .hadoopJarStep(step1)
-                .name("Step1")
+                .name("step1")
                 .actionOnFailure("TERMINATE_JOB_FLOW")
                 .build();
 
@@ -67,7 +69,9 @@ public class Main {
 		 */
         HadoopJarStepConfig step2 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step2.jar")
-                .args("step2","null","s3n://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/2gram/data")
+                // .args("step2","null","s3n://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/2gram/data")
+                .args("step2", "s3n://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/2gram/data")
+                .mainClass("step2")
                 .build();
 
         StepConfig stepTwo = StepConfig.builder()
@@ -82,6 +86,7 @@ public class Main {
         HadoopJarStepConfig step3 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step3.jar")
                 .args("step3","null","s3n://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/3gram/data")
+                .mainClass("step3")
                 .build();
 
         StepConfig stepThree = StepConfig.builder()
@@ -96,6 +101,7 @@ public class Main {
         HadoopJarStepConfig step4 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step4.jar")
                 .args("step4")
+                .mainClass("step4")
                 .build();
 
         StepConfig stepFour = StepConfig.builder()
@@ -110,6 +116,7 @@ public class Main {
         HadoopJarStepConfig step5 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step5.jar")
                 .args("step5")
+                .mainClass("step5")
                 .build();
 
         StepConfig stepFive = StepConfig.builder()
@@ -124,6 +131,7 @@ public class Main {
         HadoopJarStepConfig step6 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step6.jar")
                 .args("step6","null","s3n://" + bucketName + "//outputAssignment2")
+                .mainClass("step6")
                 .build();
 
         StepConfig stepSix = StepConfig.builder()
@@ -137,7 +145,7 @@ public class Main {
                 // Can also check what "InstanceType.M4_LARGE.toString()" returns and just put it here.
                 .masterInstanceType(InstanceType.M4_LARGE.toString())
                 .slaveInstanceType(InstanceType.M4_LARGE.toString())
-                .hadoopVersion("2.7.3")
+                .hadoopVersion("3.1.3")
                 // PUT A NAME OF A KEYPAIR HERE!@#$!@#$!@#$
                 .ec2KeyName("kp1")
                 // The bottom line may not be the one wanted, but it compiles.
@@ -153,13 +161,9 @@ public class Main {
                 // .steps(stepOne,stepTwo,stepThree,stepFour,stepFive,stepSix)
                 .steps(stepOne)
                 .logUri("s3n://" + bucketName + "/logs/")
-/*
-       Not sure if we need these 3 lines (not in Meni's example, although that doesn't mean anything).:
-
                 .serviceRole("EMR_DefaultRole")
                 .jobFlowRole("EMR_EC2_DefaultRole")
                 .releaseLabel("emr-5.11.0")
-*/
                 .build();
 
         System.out.println("Sending the job...");
