@@ -49,10 +49,11 @@ public class Main {
 
 
         HadoopJarStepConfig step1 = HadoopJarStepConfig.builder()
-                .jar("s3://" + bucketName + "/step1.jar")
+                .jar("s3://" + bucketName + "/Step1.jar")
                 //.mainClass(myClass)
-                .args("step1","null","s3n://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data")
+                .args("step1","null","s3://razalmog2211/test_text.txt")
                 .build();
+// s3n://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data
 
         StepConfig stepOne = StepConfig.builder()
                 .hadoopJarStep(step1)
@@ -149,7 +150,8 @@ public class Main {
         RunJobFlowRequest request = RunJobFlowRequest.builder()
                 .name("DSP_Ass_2")
                 .instances(instances)
-                .steps(stepOne,stepTwo,stepThree,stepFour,stepFive,stepSix)
+                // .steps(stepOne,stepTwo,stepThree,stepFour,stepFive,stepSix)
+                .steps(stepOne)
                 .logUri("s3n://" + bucketName + "/logs/")
 /*
        Not sure if we need these 3 lines (not in Meni's example, although that doesn't mean anything).:

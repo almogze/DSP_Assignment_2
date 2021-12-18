@@ -39,7 +39,6 @@ public class step6 {
           	newValue.set(String.format("%s",""));
             context.write(key1,newValue);
         }
-
     }
     
     /**
