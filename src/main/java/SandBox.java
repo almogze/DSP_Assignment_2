@@ -7,8 +7,7 @@ public class SandBox {
 
     public static void main(String[] args){
 
-        String buckName = "razalmog2211";
-        awsBundle.putS3Object(buckName, "Step1.jar", "Step1.jar");
+        awsBundle.putS3Object(AwsBundle.bucketName, "Step1.jar", "Step1.jar");
 
     }
 
