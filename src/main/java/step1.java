@@ -10,18 +10,31 @@ import java.io.IOException;
 
 public class step1 {
     /**
-     * The Input:
-     *      Google 1gram database
-     *              n-gram /T year /T occurrences /T pages /T books
-     *              program   1991    3   2   1
-     *              program   1986    4   2   1
+     * Input to the mapper:
+     * Key: Line number (not important).
+     * Value: (1-gram - the actual word,
+     *        year of this aggregation,
+     *        occurences in this year,
+     *        pages - The number of pages this 1-gram appeared on in this year,
+     *        books - The number of books this 1-gram appeared in during this year)
      *
-     * The Output:
-     *      For each line from the input it creates a line with the word and its occurrences.
+     * Output of Mapper:
+     *        Key: The word.
+     *        Value: The amount of times it appeares in the year of this record
+     *               OR an asterisk (used to count total amount of words in the corpus later).
      *
-     *              T n-gram /T occurrences
-     *              program 		3
-     *              *		        4
+     * Input of Reducer:
+     *        Output of mapper.
+     *
+     * Output of Reducer:
+     *        Key: a single word.
+     *        Value: The total amount of times it appears in the corpus.
+     *
+     *        Notice that this is practically word-count.
+     *
+     *	Example input:
+     *
+     * 	Example output:
      */
     private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 

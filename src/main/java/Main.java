@@ -37,14 +37,9 @@ public class Main {
                 .region(Region.US_EAST_1)
                 .build();
 
-        /*
-        // Print list of clusters (see AWS specification for this).
-        System.out.println( emr.listClusters());
-         */
-
 		/*
         step 1
-        Add Short explanation of the functionality of step 1.
+        1-gram + amount of words in the corpus.
 		 */
 
 
@@ -65,7 +60,7 @@ public class Main {
 
 		/*
         step 2
-        Add Short explanation of the functionality of step 2.
+        2-gram
 		 */
         HadoopJarStepConfig step2 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step2.jar")
@@ -81,7 +76,7 @@ public class Main {
                 .build();
 		/*
         step 3
-        Add Short explanation of the functionality of step 3.
+        3-gram.
 		 */
         HadoopJarStepConfig step3 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step3.jar")
@@ -96,7 +91,11 @@ public class Main {
                 .build();
 		/*
         step 4
-        Add Short explanation of the functionality of step 4.
+        Join data from step 2 and 3, so that one key (which will be a threesome of
+         words) will have the following data:
+        1. The amount of times (w1, w2) appeared in the corpus.
+        2. The amount of times (w2, w3) appeared in the corpus.
+        3. The amount of times (w1, w2, w3) appeared in the corpus.
 		 */
         HadoopJarStepConfig step4 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step4.jar")
@@ -111,7 +110,8 @@ public class Main {
                 .build();
 		/*
         step 5
-        Add Short explanation of the functionality of step 5.
+        Calculate the desired probability
+        (all needed data is supplied in this step, using a local hashmap for 1-gram).
 		 */
         HadoopJarStepConfig step5 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step5.jar")
@@ -126,7 +126,7 @@ public class Main {
                 .build();
 		/*
         step 6
-        Add Short explanation of the functionality of step 6.
+        Sort the order of appearence of the output file, as requested.
 		 */
         HadoopJarStepConfig step6 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step6.jar")
@@ -142,14 +142,10 @@ public class Main {
 
         JobFlowInstancesConfig instances = JobFlowInstancesConfig.builder()
                 .instanceCount(3)
-                // Can also check what "InstanceType.M4_LARGE.toString()" returns and just put it here.
                 .masterInstanceType(InstanceType.M4_LARGE.toString())
                 .slaveInstanceType(InstanceType.M4_LARGE.toString())
                 .hadoopVersion("3.1.3")
-                // PUT A NAME OF A KEYPAIR HERE!@#$!@#$!@#$
                 .ec2KeyName("kp1")
-                // The bottom line may not be the one wanted, but it compiles.
-                // Just beware that this may be the cause of problems -- Check it.
                 .placement(PlacementType.builder().availabilityZone("us-east-1a").build())
                 .keepJobFlowAliveWhenNoSteps(false)
                 .build();

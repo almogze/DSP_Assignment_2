@@ -14,16 +14,31 @@ import java.io.IOException;
 
 public class step2 {
 	/**
-	 * The Input:
-	 *      Google 2gram database
-	 *              n-gram /T year /T occurrences /T pages /T books
-	 *              program is     1991    3   2   1
+	 * Input to the mapper:
+	 * Key: Line number (not important).
+	 * Value: (2-gram - the actual words,
+	 *        year of this aggregation,
+	 *        occurences in this year,
+	 *        pages - The number of pages this 2-gram appeared on in this year,
+	 *        books - The number of books this 2-gram appeared in during this year)
 	 *
-	 * The Output:
-	 *      For each line from the input it creates a line with the word and its occurrences.
-	 *               T n-gram /T occurrences
-	 *               program  is		3  
-	 *               program  is        1  
+	 * Output of Mapper:
+	 *        Key: The word.
+	 *        Value: The amount of times it appeares in the year of this record.
+	 *
+	 * Input of Reducer:
+	 *        Output of mapper.
+	 *
+	 * Output of Reducer:
+	 *        Key: a pair of words (sepparated by a whitespace).
+	 *        Value: The total amount of times it appears in the corpus.
+	 *
+	 *        Notice that this is practically word-count.
+	 *
+	 * Example input:
+	 *
+	 * Example output:
+	 *
 	 */
 	private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 

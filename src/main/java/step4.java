@@ -15,14 +15,25 @@ import java.io.IOException;
 
 public class step4 {
 	/**
-	 * The input:
-	 *      Combines all the occurrences with the same key.
-	 *               T n-gram   	T occurrences
-	 *               program is good     	4                
-	 * The Output:
-	 *               T n-gram /T occurrences
-	 *               program is	 program  is good	4
-	 *           	 is good	 program  is good	4	   
+	 * Input to the mapper:
+	 * Key:
+	 * Value:
+	 *
+	 * Output of Mapper:
+	 *        Key:
+	 *        Value:
+	 *
+	 * Input of Reducer:
+	 *        Output of mapper.
+	 *
+	 * Output of Reducer:
+	 *        Key:
+	 *        Value:
+	 *
+	 * Example input:
+	 *
+	 * Example output:
+	 *
 	 */
 	private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 		@Override

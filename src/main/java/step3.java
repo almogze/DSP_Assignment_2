@@ -46,21 +46,34 @@ public class step3 {
 
     }
 
-    
-    /**
-     * Input:
-     *      The input is the sorted output of the mapper 
-     *      Maybe output from different mappers.
-     *      Template:
-     *               T n-gram /T occurrences
-     *                 program  is good		3  
-     *                 program  is good     1 
-     *
-     * Output:
-     *      Combines all the occurrences with the same key.
-     *               T n-gram   	T occurrences
-     *               program is good     	4   
-     */
+
+	/**
+	 * Input to the mapper:
+	 * Key: Line number (not important).
+	 * Value: (3-gram - the actual words,
+	 *        year of this aggregation,
+	 *        occurences in this year,
+	 *        pages - The number of pages this 3-gram appeared on in this year,
+	 *        books - The number of books this 3-gram appeared in during this year)
+	 *
+	 * Output of Mapper:
+	 *        Key: The word.
+	 *        Value: The amount of times it appeares in the year of this record.
+	 *
+	 * Input of Reducer:
+	 *        Output of mapper.
+	 *
+	 * Output of Reducer:
+	 *        Key: a threesome of words (sepparated by a whitespace).
+	 *        Value: The total amount of times it appears in the corpus.
+	 *
+	 *        Notice that this is practically word-count.
+	 *
+	 * Example input:
+	 *
+	 * Example output:
+	 *
+	 */
     public static class Reduce extends Reducer<Text, Text, Text, Text> {
 
     	@Override
