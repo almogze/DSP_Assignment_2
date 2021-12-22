@@ -75,7 +75,7 @@ public class step5 {
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
 		public static Long c0 = new  Long(0);
-		public static HashMap <String, Double> map= new HashMap<String,Double>();
+		public static HashMap <String, Double> singles= new HashMap<String,Double>();
 
 
 		public void setup(Reducer.Context context) throws IOException {
@@ -94,7 +94,7 @@ public class step5 {
 							c0 = Long.parseLong(ones[1]);
 						}
 						else{
-							map.put(ones[0], (double) Long.parseLong(ones[1]));
+							singles.put(ones[0], (double) Long.parseLong(ones[1]));
 						}
 					}
 					reader.close();
@@ -119,8 +119,8 @@ public class step5 {
 			Double prob=0.0;
 			Text newKey = new Text();
 			Text newVal = new Text();
-			N1=map.get(w3);
-			C1=map.get(w2);
+			N1=singles.get(w3);
+			C1=singles.get(w2);
 			boolean b1=false;
 			boolean b2=false;
 			for (Text val : values) {
@@ -128,7 +128,6 @@ public class step5 {
 				if(s.length<2){
 					N3=(double) Long.parseLong(s[0]);
 					k3=(Math.log(N3+1)+1)/(Math.log(N3+1)+2);
-
 				}
 				else{
 					if(s[0].equals(w1)&&s[1].equals(w2)){
