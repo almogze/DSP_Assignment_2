@@ -18,7 +18,7 @@ public class step2 {
 	 * Key: Line number (not important).
 	 * Value: (2-gram - the actual words,
 	 *        year of this aggregation,
-	 *        occurences in this year,
+	 *        occurrences in this year,
 	 *        pages - The number of pages this 2-gram appeared on in this year,
 	 *        books - The number of books this 2-gram appeared in during this year)
 	 *
@@ -26,14 +26,6 @@ public class step2 {
 	 *        Key: The word.
 	 *        Value: The amount of times it appeares in the year of this record.
 	 *
-	 * Input of Reducer:
-	 *        Output of mapper.
-	 *
-	 * Output of Reducer:
-	 *        Key: a pair of words (sepparated by a whitespace).
-	 *        Value: The total amount of times it appears in the corpus.
-	 *
-	 *        Notice that this is practically word-count.
 	 *
 	 * Example input:
 	 *
@@ -44,52 +36,49 @@ public class step2 {
 
 		@Override
 		public void map (LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
-			String[] strings = value.toString().split("\t");
-			String[] words = strings[0].split(" ");
+			String[] vals = value.toString().split("\t");
+			String[] words = vals[0].split(" ");
 			if(words.length>1){
 				String w1 = words[0];
 				String w2 = words[1];
-				int occur = Integer.parseInt(strings[2]);
 				Text text = new Text();
 				text.set(String.format("%s %s",w1,w2));
-				Text text1 = new Text();
-				text1.set(String.format("%d",occur));
-				context.write(text ,text1);
+				Text occurrences = new Text();
+				occurrences.set(vals[2]);
+				context.write(text ,occurrences);
 			}
 		}
-
 	}
 
 
 	/**
 	 * Input:
-	 *      The input is the sorted output of the mapper 
-	 *      Maybe output from different mappers.
-	 *      Template:
-	 *               T n-gram /T occurrences
-	 *                 program  is		3  
-	 *                 program  is      1 
+	 *        Output of mapper.
 	 *
 	 * Output:
-	 *      Combines all the occurrences with the same key.
-	 *               T n-gram   	T occurrences
-	 *               program is     	4   
+	 *        Key: a pair of words (sepparated by a whitespace).
+	 *        Value: The total amount of times it appears in the corpus.
+	 *
+	 *        Notice that this is practically word-count.
+	 *
+	 * Example input:
+	 *
+	 * Example output:
+	 *
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
 
 		@Override
 		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-			String oldKey=key.toString();
-			int sum_occ = 0;
-			for (Text val : values) {
-				sum_occ += Long.parseLong(val.toString());
+			int sumOccurrences = 0;
+			for (Text occ : values) {
+				sumOccurrences += Long.parseLong(occ.toString());
 			}
-			Text newKey = new Text();
-			newKey.set(String.format("%s",oldKey));
-			Text newVal = new Text();
-			newVal.set(String.format("%d",sum_occ));
-			context.write(newKey, newVal);
 
+			Text newVal = new Text();
+			newVal.set(String.format("%d",sumOccurrences));
+			// We send the same key, with the total amount of it's appearences in the corpus.
+			context.write(key, newVal);
 		}
 	}
 

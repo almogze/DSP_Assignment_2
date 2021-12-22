@@ -14,45 +14,11 @@ import java.io.IOException;
 
 public class step3 {
 	/**
-     * The Input:
-     *      Google 3gram database
-     *              n-gram /T year /T occurrences /T pages /T books
-     *              program is good    1991    3   2   1
-     *
-     * The Output:
-     *      For each line from the input it creates a line with the word and its occurrences.
-     *               T n-gram /T occurrences
-     *               program  is good		3  
-     *               program  is good       1  
-     */
-    private static class Map extends Mapper<LongWritable, Text, Text, Text> {
-
-        @Override
-        public void map (LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
-            String[] strings = value.toString().split("\t");
-            String[] words = strings[0].split(" ");
-            if(words.length>2){
-            String w1 = words[0];
-            String w2 = words[1];
-            String w3= words[2];
-            int occur = Integer.parseInt(strings[2]);
-            Text text = new Text();
-            text.set(String.format("%s %s %s",w1,w2,w3));
-            Text text1 = new Text();
-            text1.set(String.format("%d",occur));
-            context.write(text ,text1);
-            }
-        }
-
-    }
-
-
-	/**
 	 * Input to the mapper:
 	 * Key: Line number (not important).
 	 * Value: (3-gram - the actual words,
 	 *        year of this aggregation,
-	 *        occurences in this year,
+	 *        occurrences in this year,
 	 *        pages - The number of pages this 3-gram appeared on in this year,
 	 *        books - The number of books this 3-gram appeared in during this year)
 	 *
@@ -74,20 +40,54 @@ public class step3 {
 	 * Example output:
 	 *
 	 */
+    private static class Map extends Mapper<LongWritable, Text, Text, Text> {
+
+        @Override
+        public void map (LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
+            String[] vals = value.toString().split("\t");
+            String[] words = vals[0].split(" ");
+            if(words.length>2){
+				String w1 = words[0];
+				String w2 = words[1];
+				String w3= words[2];
+				Text text = new Text();
+				text.set(String.format("%s %s %s",w1,w2,w3));
+				Text occurs = new Text();
+				occurs.set(vals[2]);
+				context.write(text ,occurs);
+            }
+        }
+    }
+
+
+	/**
+	 * Input:
+	 *        Output of mapper.
+	 *
+	 * Output:
+	 *        Key: a threesome of words (sepparated by a whitespace).
+	 *        Value: The total amount of times it appears in the corpus.
+	 *
+	 *        Notice that this is practically word-count.
+	 *
+	 * Example input:
+	 *
+	 * Example output:
+	 *
+	 */
     public static class Reduce extends Reducer<Text, Text, Text, Text> {
 
     	@Override
     	protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-    		String oldKey=key.toString();
-    		int sum_occ = 0;
-    		for (Text val : values) {
-    			sum_occ += Long.parseLong(val.toString());
-    		}
-    		Text newKey = new Text();
-    		newKey.set(String.format("%s",oldKey));
-    		Text newVal = new Text();
-    		newVal.set(String.format("%d",sum_occ));
-    		context.write(newKey, newVal);
+			int sumOccurrences = 0;
+			for (Text occ : values) {
+				sumOccurrences += Long.parseLong(occ.toString());
+			}
+
+			Text newVal = new Text();
+			newVal.set(String.format("%d",sumOccurrences));
+			// We send the same key, with the total amount of it's appearences in the corpus.
+			context.write(key, newVal);
     	}
     }
 

@@ -15,19 +15,21 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import java.io.IOException;
 
 public class step6 {
-	
-	 /**
-     * The Input:
-     *      The input is the output of Step 5
-     *         T  n-gram  /T  prob
-     *         program is good   0.4
-     *
-     * The Output:
-     *      Same data,ordered by the key.
-     *        T  n-gram  /T  prob
-     *        program is good  0.4
-     *
-     */
+
+	/**
+	 * Input to the mapper:
+	 * Key:
+	 * Value:
+	 *
+	 * Output of Mapper:
+	 *        Key:
+	 *        Value:
+	 *
+	 * Example input:
+	 *
+	 * Example output:
+	 *
+	 */
     private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 
         @Override
@@ -40,18 +42,20 @@ public class step6 {
             context.write(key1,newValue);
         }
     }
-    
-    /**
-     * The Input:
-     *      The output of the map after ordered by the value(the prob)
-     *         T  n-gram  /T  prob
-     *         program is good   0.4
-     *         program is bad    0.3
-     *
-     * The Output:
-     *      Same data.
-     *
-     */
+
+	/**
+	 * Input:
+	 *        Output of mapper.
+	 *
+	 * Output:
+	 *        Key:
+	 *        Value:
+	 *
+	 * Example input:
+	 *
+	 * Example output:
+	 *
+	 */
 
     private static class Reduce extends Reducer<Text, Text, Text, Text> {
 		@Override

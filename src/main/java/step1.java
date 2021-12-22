@@ -14,7 +14,7 @@ public class step1 {
      * Key: Line number (not important).
      * Value: (1-gram - the actual word,
      *        year of this aggregation,
-     *        occurences in this year,
+     *        occurrences in this year,
      *        pages - The number of pages this 1-gram appeared on in this year,
      *        books - The number of books this 1-gram appeared in during this year)
      *
@@ -40,53 +40,48 @@ public class step1 {
 
         @Override
         public void map (LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
-            String[] strings = value.toString().split("\t");
-            String w1 = strings[0];
-            if(!(w1.equals("*"))){
-                int occur = Integer.parseInt(strings[2]);
-                Text text = new Text();
-                text.set(String.format("%s",w1));
-                Text text1 = new Text();
-                Text text2=new Text();
-                text2.set(String.format("*"));
-                text1.set(String.format("%d",occur));
-                context.write(text,text1);
-                context.write(text2,text1);
-            }
+            String[] vals = value.toString().split("\t");
+            String w1 = vals[0];
+
+            System.out.println(w1);     // Check if this is also a tuple or just a word (we think it's a word)
+
+            Text text = new Text();
+            text.set(w1);
+            Text occurences = new Text();
+            occurences.set(vals[2]);
+            Text text2 = new Text();
+            text2.set("*");
+            context.write(text,occurences);
+            context.write(text2,occurences);
         }
-
     }
-
 
     /**
      * Input:
-     *      The input is the sorted output of the mapper.
-     *      Maybe output from different mappers.
-     *      Template:
-     *              T n-gram /T occurrences
-     *                program  		3
-     *                program       4
+     *        Output of mapper.
      *
      * Output:
-     *      Combines all the same occurrences by key.
-     *              T n-gram   	T occurrences
-     *               program       		7
+     *        Key:
+     *        Value:
+     *
+     * Example input:
+     *
+     * Example output:
+     *
      */
     private static class Reduce extends Reducer<Text, Text, Text, Text> {
         @Override
         protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-            String w1 = key.toString();
-            int sum_occ = 0;
+            int sumOccurences = 0;
 
-            for (Text val : values) {
-                sum_occ += Long.parseLong(val.toString());
+            for (Text occ : values) {
+                sumOccurences += Long.parseLong(occ.toString());
             }
 
-            Text newKey = new Text();
-            newKey.set(String.format("%s",w1));
             Text newVal = new Text();
-            newVal.set(String.format("%d",sum_occ));
-            context.write(newKey, newVal);
+            newVal.set(String.format("%d",sumOccurences));
+            // We send the same key, with the total amount of it's appearences in the corpus.
+            context.write(key, newVal);
         }
     }
 
@@ -114,7 +109,6 @@ public class step1 {
         String output="/output1/";
         FileOutputFormat.setOutputPath(job, new Path(output));
         job.waitForCompletion(true);
-
     }
 }
 

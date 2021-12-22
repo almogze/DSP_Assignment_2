@@ -27,13 +27,6 @@ public class step5 {
 	 *        Key:
 	 *        Value:
 	 *
-	 * Input of Reducer:
-	 *        Output of mapper.
-	 *
-	 * Output of Reducer:
-	 *        Key:
-	 *        Value:
-	 *
 	 * Example input:
 	 *
 	 * Example output:
@@ -65,18 +58,20 @@ public class step5 {
 			}		
 		}
 	}
-	
-	
+
+
 	/**
-	 * The input:
-	 *      T n-gram /T occurrences
-	 *      program is good program is	5  
-	 *      program is good is good		4
-	 *    	program is good 			4  
-	 *		OR the output of step 1.    
-	 * The Output:
-	 *               T n-gram /T prob
-	 *               program is good   0.6
+	 * Input:
+	 *        Output of mapper.
+	 *
+	 * Output:
+	 *        Key:
+	 *        Value:
+	 *
+	 * Example input:
+	 *
+	 * Example output:
+	 *
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
 		public static Long c0 = new  Long(0);
@@ -91,12 +86,12 @@ public class step5 {
 				if (fileStatus.getPath().getName().startsWith("part")){
 					FSDataInputStream InputStream = fileSystem.open(fileStatus.getPath());
 					BufferedReader reader = new BufferedReader(new InputStreamReader(InputStream, "UTF-8"));
-					String line=null;
+					String line = null;
 					String[] ones;
 					while ((line = reader.readLine()) != null){
 						ones = line.split("\t");
 						if(ones[0].equals("*")){
-							c0=Long.parseLong(ones[1]);
+							c0 = Long.parseLong(ones[1]);
 						}
 						else{
 							map.put(ones[0], (double) Long.parseLong(ones[1]));
