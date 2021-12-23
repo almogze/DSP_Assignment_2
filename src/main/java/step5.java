@@ -6,6 +6,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Partitioner;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -35,27 +36,31 @@ public class step5 {
 	private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 		@Override
 		public void map (LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
-			String[] strings = value.toString().split("\t");
-			String[] words1 = strings[0].split(" ");
-			String w1 = words1[0];
-			String w2 = words1[1]; 
-			String w3 = words1[2];
-			String[] words2 = strings[1].split(" ");
-			int occur = 0;
-			Text text = new Text();
-			text.set(String.format("%s %s %s",w1,w2,w3));
-			if(words2.length>1){
-				occur= Integer.parseInt(words2[2]) ;
-				Text text2=new Text();
-				text2.set(String.format("%s %s %d",words2[0],words2[1],occur));
+			String[] keyVal = value.toString().split("\t");
+
+			context.write(new Text(keyVal[0]), new Text(keyVal[1]));
+
+			// This stage is essentially not needed.
+
+
+
+			/*
+
+			if(oldVal.length>1){
+				occur = Integer.parseInt(oldVal[2]);
+				Text text2 = new Text(String.format("%s %s %d",oldVal[0],oldVal[1],occur));
+				// text2.set(String.format("%s %s %d",words2[0],words2[1],occur));
 				context.write(text, text2);
 			}
 			else{
-				occur= Integer.parseInt(strings[1]) ;
-				Text text1 = new Text();
-				text1.set(String.format("%d",occur));
+				occur= Integer.parseInt(keyVal[1]) ;
+				Text text1 = new Text(String.format("%d",occur));
+				// text1.set(String.format("%d",occur));
 				context.write(text ,text1);
-			}		
+			}
+			 */
+
+
 		}
 	}
 
@@ -109,6 +114,7 @@ public class step5 {
 			String w1 = strings[0];
 			String w2 = strings[1];
 			String w3= strings[2];
+
 			Double N3=0.0;
 			Double N2=0.0;
 			Double N1=0.0;
@@ -117,12 +123,16 @@ public class step5 {
 			Double k3=0.0;
 			Double C2=0.0;
 			Double prob=0.0;
+
 			Text newKey = new Text();
 			Text newVal = new Text();
+
 			N1=singles.get(w3);
 			C1=singles.get(w2);
+
 			boolean b1=false;
 			boolean b2=false;
+
 			for (Text val : values) {
 				String[] s=val.toString().split(" ");
 				if(s.length<2){
@@ -172,12 +182,16 @@ public class step5 {
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
 		job.setPartitionerClass(myPartitioner.class);
+		job.setInputFormatClass(TextInputFormat.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
-		String input1="/output4/";
+		/*
 		String input2="/output3/";
-		String output="/output5/";
 		MultipleInputs.addInputPath(job, new Path(input1), TextInputFormat.class);
-		MultipleInputs.addInputPath(job, new Path(input2), TextInputFormat.class);	
+		MultipleInputs.addInputPath(job, new Path(input2), TextInputFormat.class);
+		 */
+		String input1="/output4/";
+		String output="/output5/";
+		FileInputFormat.addInputPath(job, new Path(input1));
 		FileOutputFormat.setOutputPath(job, new Path(output));
 		job.waitForCompletion(true);
 	}

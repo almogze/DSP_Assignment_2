@@ -45,12 +45,12 @@ public class step1 {
 
             System.out.println(w1);     // Check if this is also a tuple or just a word (we think it's a word)
 
-            Text text = new Text();
-            text.set(w1);
-            Text occurences = new Text();
-            occurences.set(vals[2]);
-            Text text2 = new Text();
-            text2.set("*");
+            Text text = new Text(w1);
+            // text.set(w1);
+            Text occurences = new Text(vals[2]);
+            // occurences.set(vals[2]);
+            Text text2 = new Text("*");
+            // text2.set("*");
             context.write(text,occurences);
             context.write(text2,occurences);
         }
@@ -78,8 +78,9 @@ public class step1 {
                 sumOccurences += Long.parseLong(occ.toString());
             }
 
-            Text newVal = new Text();
-            newVal.set(String.format("%d",sumOccurences));
+            Text newVal = new Text(String.format("%d",sumOccurences));
+            // newVal.set(String.format("%d",sumOccurences));
+
             // We send the same key, with the total amount of it's appearences in the corpus.
             context.write(key, newVal);
         }

@@ -41,10 +41,10 @@ public class step2 {
 			if(words.length>1){
 				String w1 = words[0];
 				String w2 = words[1];
-				Text text = new Text();
-				text.set(String.format("%s %s",w1,w2));
-				Text occurrences = new Text();
-				occurrences.set(vals[2]);
+				Text text = new Text(String.format("%s %s",w1,w2));
+				// text.set(String.format("%s %s",w1,w2));
+				Text occurrences = new Text(vals[2]);
+				// occurrences.set(vals[2]);
 				context.write(text ,occurrences);
 			}
 		}
@@ -75,8 +75,9 @@ public class step2 {
 				sumOccurrences += Long.parseLong(occ.toString());
 			}
 
-			Text newVal = new Text();
-			newVal.set(String.format("%d",sumOccurrences));
+			Text newVal = new Text(String.format("%d",sumOccurrences));
+			// newVal.set(String.format("%d",sumOccurrences));
+
 			// We send the same key, with the total amount of it's appearences in the corpus.
 			context.write(key, newVal);
 		}

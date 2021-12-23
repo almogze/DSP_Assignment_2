@@ -50,10 +50,10 @@ public class step3 {
 				String w1 = words[0];
 				String w2 = words[1];
 				String w3= words[2];
-				Text text = new Text();
-				text.set(String.format("%s %s %s",w1,w2,w3));
-				Text occurs = new Text();
-				occurs.set(vals[2]);
+				Text text = new Text(String.format("%s %s %s",w1,w2,w3));
+				// text.set(String.format("%s %s %s",w1,w2,w3));
+				Text occurs = new Text(vals[2]);
+				// occurs.set(vals[2]);
 				context.write(text ,occurs);
             }
         }
@@ -84,8 +84,9 @@ public class step3 {
 				sumOccurrences += Long.parseLong(occ.toString());
 			}
 
-			Text newVal = new Text();
-			newVal.set(String.format("%d",sumOccurrences));
+			Text newVal = new Text(String.format("%d",sumOccurrences));
+			// newVal.set(String.format("%d",sumOccurrences));
+
 			// We send the same key, with the total amount of it's appearences in the corpus.
 			context.write(key, newVal);
     	}

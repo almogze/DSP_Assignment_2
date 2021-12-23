@@ -34,25 +34,28 @@ public class step4 {
 	private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 		@Override
 		public void map (LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
-			String[] words = key.toString().split(" ");
+			String[] keyVal = value.toString().split("\t");
+
+			String[] words = keyVal[0].split(" ");
 			String w1 = words[0];
 			String w2 = words[1];   
 
-			int occ = Integer.parseInt(value.toString()) ;
-			Text occurs = new Text();
-			occurs.set(String.format("%d",occ));
+			// int occ = Integer.parseInt(keyVal[1]);
+			String occ = keyVal[1];
+			Text occurs = new Text(occ);
+			// occurs.set(String.format("%d",occ));
 
-			Text firstTwo = new Text();
-			firstTwo.set(String.format("%s %s",w1,w2));
+			Text firstTwo = new Text(String.format("%s %s",w1,w2));
+			// firstTwo.set(String.format("%s %s",w1,w2));
 
 			if(words.length>2){
 				String w3 = words[2];
-				Text t = new Text();
-				t.set(String.format("%s %s %s %d",w1,w2,w3,occ));
-				Text lastTwo = new Text();
-				lastTwo.set(String.format("%s %s",w2,w3));
-				context.write(firstTwo, t);
-				context.write(lastTwo, t);
+				Text newVal = new Text(String.format("%s %s %s %s",w1,w2,w3,occ));
+				// t.set(String.format("%s %s %s %d",w1,w2,w3,occ));
+				Text lastTwo = new Text(String.format("%s %s",w2,w3));
+				// lastTwo.set(String.format("%s %s",w2,w3));
+				context.write(firstTwo, newVal);
+				context.write(lastTwo, newVal);
 			}
 			else{
 			context.write(firstTwo ,occurs);
@@ -78,9 +81,10 @@ public class step4 {
 		@Override
 		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 			// We wish to save a local ArrayList<String> that will hold the values received in the reduce procedure,
-			// until we find the amount of occurences of "w1 w2" in the corpus.
+			// until we find the amount of occurrences of "w1 w2" in the corpus.
 
-			List<String> vals = new ArrayList<String>();
+			List<String> savedVals = new ArrayList<>();
+
 
 			String[] words = key.toString().split(" ");
 			String w1 = words[0];
@@ -90,7 +94,7 @@ public class step4 {
 			Text newVal = new Text();
 
 			boolean found = false;
-			int occ = 0;
+			int occ2 = 0;			// The number of occurrences of "w1 w2" in the corpus.
 
 			for (Text val : values) {
 
@@ -100,52 +104,42 @@ public class step4 {
 				if (!found){
 					if (v.length == 1) {
 						// 1. save the amount of occurrences in a "global" variable.
+						occ2 = Integer.parseInt(v[0]);
+
 						// 2. Perform the writing of all the values in our list to the context.
+						for (String threes : savedVals){
+							String[] vs = threes.split(" ");
+
+							newKey = new Text(String.format("%s %s %s", vs[0], vs[1], vs[2]));
+							// New value: occ3, w1, w2, occ2
+							newVal = new Text(String.format("%s %s %s %d", vs[3], w1, w2, occ2));
+							context.write(newKey, newVal);
+
+						}
+
 						// 3. Clean the data-structure (list).
+						savedVals.clear();
+
 						found = true;
 					}
 					else{
-						// We save the whole string, containing w1, w2, w3, the amount of their occurrences
+						// We save the whole string, containing w1, w2, w3, the amount of their occurrences - occ3
 						// delimited by a space.
-						vals.add(val.toString());
+						savedVals.add(val.toString());
 					}
 				}
 				// We have the amount of occurances of the two words w1, w2 --> Can just send the desired <key, value>
 				// to the context.
 				else{
-					// Just send to context <"w1 w2 w3", "w1 w2 (occ_w1w2)">
-				}
-
-			}
-
-
-/*
-			int occu = 0;
-
-			boolean b1=false;
-			boolean b2=false;
-
-			for (Text val : values) {
-
-				String[] vs = val.toString().split(" ");
-
-				if(vs.length>1){
-					newKey.set(String.format("%s %s %s", vs[0], vs[1], vs[2]));
-					b1=true;
-				}
-				else{
-					occu = (int) Long.parseLong(vs[0]);
-					newVal.set(String.format("%s %s %d",w1,w2,occu));
-					b2 = true;
-				}
-				if(b1 && b2){
+					// Just send to context <"w1 w2 w3", "occ3 w1 w2 (occ_w1w2)">
+					String[] vs = val.toString().split(" ");
+					newKey = new Text(String.format("%s %s %s", vs[0], vs[1], vs[2]));
+					// New value: occ3, w1, w2, occ2
+					newVal = new Text(String.format("%s %s %s %d", vs[3], w1, w2, occ2));
 					context.write(newKey, newVal);
-					b1 = false;
 				}
+
 			}
-*/
-
-
 		}
 	}
 	
