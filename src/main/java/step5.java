@@ -21,12 +21,16 @@ import java.util.HashMap;
 public class step5 {
 	/**
 	 * Input to the mapper:
-	 * Key:
-	 * Value:
+	 *        Key: Record number (key of TextFormat).
+	 *        Value: <key, val> of step 4.
+	 *        			Key: 3 words in format "w1, w2, w3".
+	 *        			Value: "occ3 w1 w2 occ2" or "occ3 w2 w3 occ2"
+	 *        			Where:
+	 *        				occ3 - The amount of appearances of "w1, w2, w3" in the corpus.
+	 *        				occ2 - The amount of appearances of "w1, w2" or "w2 w3" in the corpus.
 	 *
 	 * Output of Mapper:
-	 *        Key:
-	 *        Value:
+	 *        Same as input...
 	 *
 	 * Example input:
 	 *
@@ -40,7 +44,7 @@ public class step5 {
 
 			context.write(new Text(keyVal[0]), new Text(keyVal[1]));
 
-			// This stage is essentially not needed.
+			// This stage essentially is not needed.
 
 
 
@@ -67,7 +71,8 @@ public class step5 {
 
 	/**
 	 * Input:
-	 *        Output of mapper.
+	 *        Key: "w1, w2, w3".
+	 *        Value: "occ3, w1, w2, occ2" or "occ3, w2, w3, occ2"
 	 *
 	 * Output:
 	 *        Key:
@@ -79,8 +84,8 @@ public class step5 {
 	 *
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
-		public static Long c0 = new  Long(0);
-		public static HashMap <String, Double> singles= new HashMap<String,Double>();
+		public static Long c0 = 0L;
+		public static HashMap <String, Double> singles = new HashMap<>();
 
 
 		public void setup(Reducer.Context context) throws IOException {
@@ -107,7 +112,22 @@ public class step5 {
 			}
 		}
 
-
+		/**
+		 *
+		 * @param key: Key of input pair.
+		 * @param values: Values for this key.
+		 * @param context: Context of the job.
+		 * @throws IOException
+		 * @throws InterruptedException
+		 *
+		 * Index of constants:
+		 * 		C0: The number of words in the corpus (single words).
+		 * 		C1: The number of appearances of w2 in the corpus.
+		 * 		C2: The number of appearances of (w1 w2) in the corpus.
+		 * 		N1: The number of appearances of w3 in the corpus.
+		 * 		N2: The number of appearances of (w2 w3) in the corpus.
+		 * 		N3: The number of appearances of "w1, w2, w3" in the corpus.
+		 */
 		@Override
 		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 			String[] strings = key.toString().split(" ");
@@ -115,26 +135,50 @@ public class step5 {
 			String w2 = strings[1];
 			String w3= strings[2];
 
-			Double N3=0.0;
-			Double N2=0.0;
-			Double N1=0.0;
-			Double C1=0.0;
-			Double k2=0.0;
-			Double k3=0.0;
-			Double C2=0.0;
-			Double prob=0.0;
+			Double N3 = -1.0;
+			Double N2 = 0.0;
+			Double N1 = 0.0;
+			Double C1 = 0.0;
+			Double k2 = 0.0;
+			Double k3 = 0.0;
+			Double C2 = 0.0;
+			Double prob = 0.0;
 
-			Text newKey = new Text();
-			Text newVal = new Text();
+			N1 = singles.get(w3);
+			C1 = singles.get(w2);
 
-			N1=singles.get(w3);
-			C1=singles.get(w2);
+			for (Text val : values){
+				String[] vals = val.toString().split(" ");
 
-			boolean b1=false;
-			boolean b2=false;
+				if (N3 < 0)
+					N3 = Double.parseDouble(vals[0]);
+
+				if (vals[1].equals(w1) && vals[2].equals(w2)){
+					C2 = Double.parseDouble(vals[3]);
+					k3 = (Math.log(N3 + 1) + 1) / (Math.log(N3 + 1) + 2);
+				}
+				else if (vals[1].equals(w2) && vals[2].equals(w3)){
+					N2 = Double.parseDouble(vals[3]);
+					k2 = (Math.log(N2 + 1) + 1) / (Math.log(N2 + 1) + 2);
+				}
+				else
+					System.out.println("Something weird happend!!! Got w1 w2 that do not match w1 w2 w3 :(");
+
+				prob = (k3 * (N3 / C2)) + ((1 - k3) * k2 * (N2 / C1)) + ((1 - k3) * (1 - k2) * (N1/c0));
+
+				Text newKey = new Text(key.toString());
+				Text newVal = new Text(prob.toString());
+				context.write(newKey, newVal);
+
+
+
+			}
+
+			/*
+
 
 			for (Text val : values) {
-				String[] s=val.toString().split(" ");
+				String[] s = val.toString().split(" ");
 				if(s.length<2){
 					N3=(double) Long.parseLong(s[0]);
 					k3=(Math.log(N3+1)+1)/(Math.log(N3+1)+2);
@@ -158,6 +202,8 @@ public class step5 {
 					context.write(newKey, newVal);
 				}
 			}
+		 	*/
+
 		}
 
 		// Add cleanup function (Do we need to?).
