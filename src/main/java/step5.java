@@ -84,7 +84,7 @@ public class step5 {
 	 *
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
-		public static Long c0 = 0L;
+		public static Long C0 = 0L;
 		public static HashMap <String, Double> singles = new HashMap<>();
 
 
@@ -101,7 +101,7 @@ public class step5 {
 					while ((line = reader.readLine()) != null){
 						ones = line.split("\t");
 						if(ones[0].equals("*")){
-							c0 = Long.parseLong(ones[1]);
+							C0 = Long.parseLong(ones[1]);
 						}
 						else{
 							singles.put(ones[0], (double) Long.parseLong(ones[1]));
@@ -164,7 +164,7 @@ public class step5 {
 				else
 					System.out.println("Something weird happend!!! Got w1 w2 that do not match w1 w2 w3 :(");
 
-				prob = (k3 * (N3 / C2)) + ((1 - k3) * k2 * (N2 / C1)) + ((1 - k3) * (1 - k2) * (N1/c0));
+				prob = (k3 * (N3 / C2)) + ((1 - k3) * k2 * (N2 / C1)) + ((1 - k3) * (1 - k2) * (N1/C0));
 
 				Text newKey = new Text(key.toString());
 				Text newVal = new Text(prob.toString());
@@ -221,7 +221,7 @@ public class step5 {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "Some meaningful name!@#$");
+		Job job = Job.getInstance(conf, "Probability calculation");
 		job.setJarByClass(step5.class);
 		job.setMapperClass(Map.class);
 		job.setReducerClass(Reduce.class);

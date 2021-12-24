@@ -18,12 +18,12 @@ public class step6 {
 
 	/**
 	 * Input to the mapper:
-	 * Key:
-	 * Value:
+	 * Key: (w1 w2 w3)
+	 * Value: probability for w3, given (w1, w2)
 	 *
 	 * Output of Mapper:
-	 *        Key:
-	 *        Value:
+	 *        Key: (w1 w2 w3 prob)
+	 *        Value: ""
 	 *
 	 * Example input:
 	 *
@@ -34,11 +34,10 @@ public class step6 {
 
         @Override
         public void map (LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
-            String[] splits = value.toString().split("\t");
-            Text key1 = new Text();
-            key1.set(String.format("%s %s",splits[0],splits[1]));
-            Text newValue = new Text();
-          	newValue.set(String.format("%s",""));
+        	// Move value to key --> Get right order of output display.
+            String[] keyVal = value.toString().split("\t");
+            Text key1 = new Text(String.format("%s %s",keyVal[0],keyVal[1]));
+            Text newValue = new Text("");
             context.write(key1,newValue);
         }
     }
@@ -48,8 +47,8 @@ public class step6 {
 	 *        Output of mapper.
 	 *
 	 * Output:
-	 *        Key:
-	 *        Value:
+	 *        Key: (w1 w2 w3 prob)
+	 *        Value: ""
 	 *
 	 * Example input:
 	 *
@@ -61,13 +60,10 @@ public class step6 {
 		@Override
 		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 			String w1 = key.toString();
-			Text newKey = new Text();
-			newKey.set(String.format("%s",w1));
-			Text newVal = new Text();
-			newVal.set(String.format("%s",""));
+			Text newKey = new Text(w1);
+			Text newVal = new Text("");
 			context.write(newKey, newVal);
 		}
-			
 	}
 
 	private static class CompareClass extends WritableComparator {
@@ -78,14 +74,15 @@ public class step6 {
 	        public int compare(WritableComparable key1, WritableComparable key2) {
 	            String[] splits1 = key1.toString().split(" ");
 	            String[] splits2 = key2.toString().split(" ");
-	            if (splits1[0].equals(splits2[0])&& splits1[1].equals(splits2[1])) {
+	            if (splits1[0].equals(splits2[0]) && splits1[1].equals(splits2[1])) {
 	                if(Double.parseDouble(splits1[3])>(Double.parseDouble(splits2[3]))){
 	                        return -1;
 	                    }
 	                    else
 	                        return 1;
 	                }
-	            return (splits1[0]+" "+splits1[1]).compareTo(splits2[0]+" "+splits2[1]);
+	            return (key1.toString().compareTo(splits2.toString()));
+	            // return (splits1[0]+" "+splits1[1]).compareTo(splits2[0]+" "+splits2[1]);
 
 	            }
 	        }
@@ -93,7 +90,7 @@ public class step6 {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "Some meaningful name!@#$");
+        Job job = Job.getInstance(conf, "Ordering");
 		job.setJarByClass(step6.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
