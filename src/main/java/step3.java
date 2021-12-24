@@ -101,7 +101,7 @@ public class step3 {
     }
     
     public static void main(String[] args) throws Exception {
-		System.out.println("Entered main of step1");
+		System.out.println("Entered main of step3");
 
 
     	Configuration conf = new Configuration();
