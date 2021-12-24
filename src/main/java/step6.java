@@ -89,6 +89,9 @@ public class step6 {
 
 
 	public static void main(String[] args) throws Exception {
+		System.out.println("Entered main of step1");
+
+
 		Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "Ordering");
 		job.setJarByClass(step6.class);
