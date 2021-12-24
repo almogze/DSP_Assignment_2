@@ -130,80 +130,57 @@ public class step5 {
 		 */
 		@Override
 		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-			String[] strings = key.toString().split(" ");
-			String w1 = strings[0];
-			String w2 = strings[1];
-			String w3= strings[2];
+			try{
 
-			Double N3 = -1.0;
-			Double N2 = 0.0;
-			Double N1 = 0.0;
-			Double C1 = 0.0;
-			Double k2 = 0.0;
-			Double k3 = 0.0;
-			Double C2 = 0.0;
-			Double prob = 0.0;
+				String[] strings = key.toString().split(" ");
+				String w1 = strings[0];
+				String w2 = strings[1];
+				String w3= strings[2];
 
-			N1 = singles.get(w3);
-			C1 = singles.get(w2);
+				Double N3 = -1.0;
+				Double N2 = 0.0;
+				Double N1 = 0.0;
+				Double C1 = 0.0;
+				Double k2 = 0.0;
+				Double k3 = 0.0;
+				Double C2 = 0.0;
+				Double prob = 0.0;
 
-			for (Text val : values){
-				String[] vals = val.toString().split(" ");
+				N1 = singles.get(w3);
+				C1 = singles.get(w2);
 
-				if (N3 < 0)
-					N3 = Double.parseDouble(vals[0]);
+				for (Text val : values){
+					String[] vals = val.toString().split(" ");
 
-				if (vals[1].equals(w1) && vals[2].equals(w2)){
-					C2 = Double.parseDouble(vals[3]);
-					k3 = (Math.log(N3 + 1) + 1) / (Math.log(N3 + 1) + 2);
-				}
-				else if (vals[1].equals(w2) && vals[2].equals(w3)){
-					N2 = Double.parseDouble(vals[3]);
-					k2 = (Math.log(N2 + 1) + 1) / (Math.log(N2 + 1) + 2);
-				}
-				else
-					System.out.println("Something weird happend!!! Got w1 w2 that do not match w1 w2 w3 :(");
+					if (N3 < 0)
+						N3 = Double.parseDouble(vals[0]);
 
-				prob = (k3 * (N3 / C2)) + ((1 - k3) * k2 * (N2 / C1)) + ((1 - k3) * (1 - k2) * (N1/C0));
-
-				Text newKey = new Text(key.toString());
-				Text newVal = new Text(prob.toString());
-				context.write(newKey, newVal);
-
-
-
-			}
-
-			/*
-
-
-			for (Text val : values) {
-				String[] s = val.toString().split(" ");
-				if(s.length<2){
-					N3=(double) Long.parseLong(s[0]);
-					k3=(Math.log(N3+1)+1)/(Math.log(N3+1)+2);
-				}
-				else{
-					if(s[0].equals(w1)&&s[1].equals(w2)){
-						C2=(double) Long.parseLong(s[2]);
-						b1=true;
+					if (vals[1].equals(w1) && vals[2].equals(w2)){
+						C2 = Double.parseDouble(vals[3]);
+						k3 = (Math.log(N3 + 1) + 1) / (Math.log(N3 + 1) + 2);
 					}
-					else{
-						if(s[0].equals(w2)&&s[1].equals(w3))
-							N2=(double) Long.parseLong(s[2]);
-						k2=(Math.log(N2+1)+1)/(Math.log(N2+1)+2);
-						b2=true;
+					else if (vals[1].equals(w2) && vals[2].equals(w3)){
+						N2 = Double.parseDouble(vals[3]);
+						k2 = (Math.log(N2 + 1) + 1) / (Math.log(N2 + 1) + 2);
 					}
-				}
-				if(C1!=null && N1!=null && b1 && b2){
-					prob=(k3*(N3/C2))+((1-k3)*k2*(N2/C1))+((1-k3)*(1-k2)*(N1/c0));
-					newKey.set(String.format("%s %s %s",w1,w2,w3));
-					newVal.set(String.format("%s",prob));
+					else
+						System.out.println("Something weird happend!!! Got w1 w2 that do not match w1 w2 w3 :(");
+
+					if (C2 == 0 || C1 == 0 || C0 == 0){
+						System.out.println("One of the C's is zero!!");
+						prob = 0.0;
+					}
+					else
+						prob = (k3 * (N3 / C2)) + ((1 - k3) * k2 * (N2 / C1)) + ((1 - k3) * (1 - k2) * (N1/C0));
+
+					Text newKey = new Text(key.toString());
+					Text newVal = new Text(prob.toString());
 					context.write(newKey, newVal);
 				}
+			}catch (Exception e){
+				System.out.println("Problem with reduce");
+				e.printStackTrace();
 			}
-		 	*/
-
 		}
 
 		// Add cleanup function (Do we need to?).
@@ -220,7 +197,7 @@ public class step5 {
 
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("Entered main of step1");
+		System.out.println("Entered main of step5");
 
 
 		Configuration conf = new Configuration();
