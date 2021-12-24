@@ -46,7 +46,7 @@ public class Main {
         HadoopJarStepConfig step1 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step1.jar")
                 //.mainClass(myClass)
-                .args("s3://razalmog2211/test_text.txt")
+                .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data")
                 .mainClass("step1")
                 .build();
 // s3n://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data
@@ -152,8 +152,8 @@ public class Main {
         RunJobFlowRequest request = RunJobFlowRequest.builder()
                 .name("DSP_Ass_2")
                 .instances(instances)
-                // .steps(stepOne,stepTwo,stepThree,stepFour,stepFive,stepSix)
-                .steps(stepOne)
+                .steps(stepOne,stepTwo,stepThree,stepFour,stepFive,stepSix)
+                // .steps(stepOne)
                 .logUri("s3n://" + bucketName + "/logs/")
                 .serviceRole("EMR_DefaultRole")
                 .jobFlowRole("EMR_EC2_DefaultRole")
