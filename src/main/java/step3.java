@@ -101,6 +101,9 @@ public class step3 {
     }
     
     public static void main(String[] args) throws Exception {
+		System.out.println("Entered main of step1");
+
+
     	Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "3gram");
 		job.setJarByClass(step3.class);

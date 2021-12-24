@@ -220,6 +220,9 @@ public class step5 {
 
 
 	public static void main(String[] args) throws Exception {
+		System.out.println("Entered main of step1");
+
+
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "Probability calculation");
 		job.setJarByClass(step5.class);

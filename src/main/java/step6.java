@@ -30,17 +30,17 @@ public class step6 {
 	 * Example output:
 	 *
 	 */
-	private static class Map extends Mapper<LongWritable, Text, Text, Text> {
+    private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 
-		@Override
-		public void map (LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
-			// Move value to key --> Get right order of output display.
-			String[] keyVal = value.toString().split("\t");
-			Text key1 = new Text(String.format("%s %s",keyVal[0],keyVal[1]));
-			Text newValue = new Text("");
-			context.write(key1,newValue);
-		}
-	}
+        @Override
+        public void map (LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
+        	// Move value to key --> Get right order of output display.
+            String[] keyVal = value.toString().split("\t");
+            Text key1 = new Text(String.format("%s %s",keyVal[0],keyVal[1]));
+            Text newValue = new Text("");
+            context.write(key1,newValue);
+        }
+    }
 
 	/**
 	 * Input:
@@ -56,7 +56,7 @@ public class step6 {
 	 *
 	 */
 
-	private static class Reduce extends Reducer<Text, Text, Text, Text> {
+    private static class Reduce extends Reducer<Text, Text, Text, Text> {
 		@Override
 		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 			String w1 = key.toString();
@@ -67,42 +67,45 @@ public class step6 {
 	}
 
 	private static class CompareClass extends WritableComparator {
-		protected CompareClass() {
-			super(Text.class, true);
-		}
-		@Override
-		public int compare(WritableComparable key1, WritableComparable key2) {
-			String[] splits1 = key1.toString().split(" ");
-			String[] splits2 = key2.toString().split(" ");
-			if (splits1[0].equals(splits2[0]) && splits1[1].equals(splits2[1])) {
-				if(Double.parseDouble(splits1[3])>(Double.parseDouble(splits2[3]))){
-					return -1;
-				}
-				else
-					return 1;
-			}
-			return (key1.toString().compareTo(splits2.toString()));
-			// return (splits1[0]+" "+splits1[1]).compareTo(splits2[0]+" "+splits2[1]);
+	        protected CompareClass() {
+	            super(Text.class, true);
+	        }
+	        @Override
+	        public int compare(WritableComparable key1, WritableComparable key2) {
+	            String[] splits1 = key1.toString().split(" ");
+	            String[] splits2 = key2.toString().split(" ");
+	            if (splits1[0].equals(splits2[0]) && splits1[1].equals(splits2[1])) {
+	                if(Double.parseDouble(splits1[3])>(Double.parseDouble(splits2[3]))){
+	                        return -1;
+	                    }
+	                    else
+	                        return 1;
+	                }
+	            return (key1.toString().compareTo(splits2.toString()));
+	            // return (splits1[0]+" "+splits1[1]).compareTo(splits2[0]+" "+splits2[1]);
 
-		}
-	}
+	            }
+	        }
 
 
 	public static void main(String[] args) throws Exception {
+		System.out.println("Entered main of step1");
+
+
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "Ordering");
+        Job job = Job.getInstance(conf, "Ordering");
 		job.setJarByClass(step6.class);
-		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(Text.class);
-		job.setMapperClass(Map.class);
-		job.setSortComparatorClass(CompareClass.class);
-		job.setReducerClass(Reduce.class);
-		job.setNumReduceTasks(1);
-		job.setInputFormatClass(TextInputFormat.class);
-		job.setOutputFormatClass(TextOutputFormat.class);
-		String input="/output5/";
-		FileInputFormat.addInputPath(job, new Path(input));
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
-		job.waitForCompletion(true);
-	}
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(Text.class);
+        job.setMapperClass(Map.class);
+        job.setSortComparatorClass(CompareClass.class);
+        job.setReducerClass(Reduce.class);
+        job.setNumReduceTasks(1);
+        job.setInputFormatClass(TextInputFormat.class);
+        job.setOutputFormatClass(TextOutputFormat.class);
+        String input="/output5/";
+        FileInputFormat.addInputPath(job, new Path(input));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        job.waitForCompletion(true);
+    }
 }

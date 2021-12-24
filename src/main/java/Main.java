@@ -44,7 +44,7 @@ public class Main {
         HadoopJarStepConfig step1 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step1.jar")
                 //.mainClass(myClass)
-                .args("step1", "s3://razalmog2211/test_text.txt")
+                .args("s3://razalmog2211/test_text.txt")
                 .mainClass("step1")
                 .build();
 // s3n://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data
@@ -61,7 +61,7 @@ public class Main {
 		 */
         HadoopJarStepConfig step2 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step2.jar")
-                .args("step2", "s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/2gram/data")
+                .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/2gram/data")
                 .mainClass("step2")
                 .build();
 
@@ -76,7 +76,7 @@ public class Main {
 		 */
         HadoopJarStepConfig step3 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step3.jar")
-                .args("step3","s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/3gram/data")
+                .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/3gram/data")
                 .mainClass("step3")
                 .build();
 
@@ -126,7 +126,7 @@ public class Main {
 		 */
         HadoopJarStepConfig step6 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step6.jar")
-                .args("step6","null","s3n://" + bucketName + "//outputAssignment2")
+                .args("s3n://" + bucketName + "//outputAssignment2")
                 .mainClass("step6")
                 .build();
 
