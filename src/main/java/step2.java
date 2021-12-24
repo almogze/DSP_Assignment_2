@@ -92,7 +92,7 @@ public class step2 {
 	}
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("Entered main of step1");
+		System.out.println("Entered main of step2");
 
 
 		Configuration conf = new Configuration();
