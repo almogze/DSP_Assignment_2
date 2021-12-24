@@ -6,6 +6,7 @@ import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Partitioner;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
@@ -81,15 +82,14 @@ public class step6 {
 	                    else
 	                        return 1;
 	                }
-	            return (key1.toString().compareTo(splits2.toString()));
+	            return (key1.toString().compareTo(key2.toString()));
 	            // return (splits1[0]+" "+splits1[1]).compareTo(splits2[0]+" "+splits2[1]);
 
 	            }
 	        }
 
-
 	public static void main(String[] args) throws Exception {
-		System.out.println("Entered main of step1");
+		System.out.println("Entered main of step6");
 
 
 		Configuration conf = new Configuration();
@@ -99,6 +99,7 @@ public class step6 {
         job.setOutputValueClass(Text.class);
         job.setMapperClass(Map.class);
         job.setSortComparatorClass(CompareClass.class);
+		// job.setPartitionerClass(myPartitioner.class);
         job.setReducerClass(Reduce.class);
         job.setNumReduceTasks(1);
         job.setInputFormatClass(TextInputFormat.class);
