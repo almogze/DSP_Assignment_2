@@ -18,9 +18,9 @@ import java.util.List;
 public class step4 {
 	/**
 	 * Input to the mapper:
-	 *       Key: The output of step 2 OR the output of step 3.
-	 *       	  Meaning that the key is a series of 2 or 3 words.
-	 *       Value: The total amount of appearences of these series in the corpus.
+	 *       Key: Key-offset - not interesting for us.
+	 *       Value: The <key, value> pair of step 2 and step 3, which is the total amount of appearences
+	 *       of (w1 w2) or (w1 w2 w3) appropriately in the corpus.
 	 *
 	 * Output of Mapper:
 	 *       Key:
@@ -131,14 +131,13 @@ public class step4 {
 				// We have the amount of occurances of the two words w1, w2 --> Can just send the desired <key, value>
 				// to the context.
 				else{
-					// Just send to context <"w1 w2 w3", "occ3 w1 w2 (occ_w1w2)">
+					// Just send to context <"w1 w2 w3", "occ3 w1 w2 occ_2">
 					String[] vs = val.toString().split(" ");
 					newKey = new Text(String.format("%s %s %s", vs[0], vs[1], vs[2]));
 					// New value: occ3, w1, w2, occ2
 					newVal = new Text(String.format("%s %s %s %d", vs[3], w1, w2, occ2));
 					context.write(newKey, newVal);
 				}
-
 			}
 		}
 	}
@@ -153,7 +152,7 @@ public class step4 {
 	    }
 	    
 	    public static void main(String[] args) throws Exception {
-			System.out.println("Entered main of step1");
+			System.out.println("Entered main of step4");
 
 
 			Configuration conf = new Configuration();
