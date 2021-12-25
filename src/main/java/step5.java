@@ -130,10 +130,13 @@ public class step5 {
 		 */
 		@Override
 		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-			String[] strings = key.toString().split(" ");
-			String w1 = strings[0];
-			String w2 = strings[1];
-			String w3= strings[2];
+			try{
+				String[] strings = key.toString().split(" ");
+				String w1 = strings[0];
+				String w2 = strings[1];
+				String w3= strings[2];
+
+
 
 			Double N3 = -1.0;
 			Double N2 = 0.0;
@@ -173,7 +176,10 @@ public class step5 {
 
 
 			}
-
+			}catch (Exception e){
+				System.out.println("Problem with reduce");
+				e.printStackTrace();
+			}
 			/*
 
 

@@ -108,8 +108,9 @@ public class step2 {
 		job.setInputFormatClass(SequenceFileInputFormat.class);
 		String output="/output2/";
 		SequenceFileInputFormat.addInputPath(job, new Path(args[1]));
-		FileOutputFormat.setOutputPath(job, new Path(output));
+		FileOutputFormat.setOutputPath(job, new Path(args[2]));
 		job.waitForCompletion(true);
+		System.exit(job.waitForCompletion(true) ? 0 : 1);
 
 
 	}

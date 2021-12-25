@@ -168,8 +168,8 @@ public class step4 {
 			String input1="/output2/";
 			String input2="/output3/";
 			String output="/output4/";
-			MultipleInputs.addInputPath(job, new Path(input1), TextInputFormat.class);
-			MultipleInputs.addInputPath(job, new Path(input2), TextInputFormat.class);
+			MultipleInputs.addInputPath(job, new Path("s3://assignment1razalmog121212/output/2gram/"), TextInputFormat.class);
+			MultipleInputs.addInputPath(job, new Path("s3://assignment1razalmog121212/output/3gram/"), TextInputFormat.class);
 			FileOutputFormat.setOutputPath(job, new Path(output));
 			job.waitForCompletion(true);
 		}
