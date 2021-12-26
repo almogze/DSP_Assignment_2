@@ -65,9 +65,9 @@ public class step5 {
 
 		public void setup(Reducer.Context context) throws IOException {
 			FileSystem fileSystem = FileSystem.get(context.getConfiguration());
-			RemoteIterator<LocatedFileStatus> it=fileSystem.listFiles(new Path("/output_step1"),false);
+			RemoteIterator<LocatedFileStatus> it = fileSystem.listFiles(new Path("/output_step1"),false);
 			while(it.hasNext()){
-				LocatedFileStatus fileStatus=it.next();
+				LocatedFileStatus fileStatus = it.next();
 				if (fileStatus.getPath().getName().startsWith("part")){
 					FSDataInputStream InputStream = fileSystem.open(fileStatus.getPath());
 					BufferedReader reader = new BufferedReader(new InputStreamReader(InputStream, "UTF-8"));

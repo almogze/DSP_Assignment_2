@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args){
 
         // Bucket name.
-        String bucketName = "assignment1razalmog121212";
+        String bucketName = "razalmog1122";
 
         S3 = S3Client.builder()
                 .region(Region.US_EAST_1)
@@ -128,7 +128,7 @@ public class Main {
                 .masterInstanceType(InstanceType.M4_LARGE.toString())
                 .slaveInstanceType(InstanceType.M4_LARGE.toString())
                 .hadoopVersion("3.1.3")
-                .ec2KeyName("test12")
+                .ec2KeyName("kp1")
                 .placement(PlacementType.builder().availabilityZone("us-east-1a").build())
                 .keepJobFlowAliveWhenNoSteps(false)
                 .build();
