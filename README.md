@@ -34,18 +34,13 @@ Step 6: --.
 ## Analysis:
 We choose 10 interesting words, and show their top-5 next words.
 
-### Word-pair \#1: --- ---
-#### Extension \#1: ---. Probability: ---.
-#### Extension \#2: ---. Probability: ---.
-#### Extension \#3: ---. Probability: ---.
-#### Extension \#4: ---. Probability: ---.
-#### Extension \#5: ---. Probability: ---.
-#### Extension \#6: ---. Probability: ---.
-#### Extension \#7: ---. Probability: ---.
-#### Extension \#8: ---. Probability: ---.
-#### Extension \#9: ---. Probability: ---.
-#### Extension \#10: ---. Probability: ---.
-
+### Word-pair \#1: והיה הדבר
+#### Extension \#1: לפלא. Probability: 0.12502247518814544.
+#### Extension \#2: קשה. Probability: 0.108344127346545.
+#### Extension \#3: הזה. Probability: 0.09264566177064017.
+#### Extension \#4: תמוה. Probability: 0.02595942497727992.
+#### Extension \#5: הולך. Probability: 0.019630204491129788.
+	
 
 ### Word-pair \#2: --- ---
 #### Extension \#1: ---. Probability: ---.
@@ -53,11 +48,6 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#3: ---. Probability: ---.
 #### Extension \#4: ---. Probability: ---.
 #### Extension \#5: ---. Probability: ---.
-#### Extension \#6: ---. Probability: ---.
-#### Extension \#7: ---. Probability: ---.
-#### Extension \#8: ---. Probability: ---.
-#### Extension \#9: ---. Probability: ---.
-#### Extension \#10: ---. Probability: ---.
 
 
 ### Word-pair \#3: --- ---
@@ -66,11 +56,6 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#3: ---. Probability: ---.
 #### Extension \#4: ---. Probability: ---.
 #### Extension \#5: ---. Probability: ---.
-#### Extension \#6: ---. Probability: ---.
-#### Extension \#7: ---. Probability: ---.
-#### Extension \#8: ---. Probability: ---.
-#### Extension \#9: ---. Probability: ---.
-#### Extension \#10: ---. Probability: ---.
 
 
 ### Word-pair \#4: --- ---
@@ -79,11 +64,6 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#3: ---. Probability: ---.
 #### Extension \#4: ---. Probability: ---.
 #### Extension \#5: ---. Probability: ---.
-#### Extension \#6: ---. Probability: ---.
-#### Extension \#7: ---. Probability: ---.
-#### Extension \#8: ---. Probability: ---.
-#### Extension \#9: ---. Probability: ---.
-#### Extension \#10: ---. Probability: ---.
 
 
 ### Word-pair \#5: --- ---
@@ -92,11 +72,6 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#3: ---. Probability: ---.
 #### Extension \#4: ---. Probability: ---.
 #### Extension \#5: ---. Probability: ---.
-#### Extension \#6: ---. Probability: ---.
-#### Extension \#7: ---. Probability: ---.
-#### Extension \#8: ---. Probability: ---.
-#### Extension \#9: ---. Probability: ---.
-#### Extension \#10: ---. Probability: ---.
 
 
 ### Word-pair \#6: --- ---
@@ -105,11 +80,6 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#3: ---. Probability: ---.
 #### Extension \#4: ---. Probability: ---.
 #### Extension \#5: ---. Probability: ---.
-#### Extension \#6: ---. Probability: ---.
-#### Extension \#7: ---. Probability: ---.
-#### Extension \#8: ---. Probability: ---.
-#### Extension \#9: ---. Probability: ---.
-#### Extension \#10: ---. Probability: ---.
 
 
 ### Word-pair \#7: --- ---
@@ -118,11 +88,6 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#3: ---. Probability: ---.
 #### Extension \#4: ---. Probability: ---.
 #### Extension \#5: ---. Probability: ---.
-#### Extension \#6: ---. Probability: ---.
-#### Extension \#7: ---. Probability: ---.
-#### Extension \#8: ---. Probability: ---.
-#### Extension \#9: ---. Probability: ---.
-#### Extension \#10: ---. Probability: ---.
 
 
 ### Word-pair \#8: --- ---
@@ -131,11 +96,6 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#3: ---. Probability: ---.
 #### Extension \#4: ---. Probability: ---.
 #### Extension \#5: ---. Probability: ---.
-#### Extension \#6: ---. Probability: ---.
-#### Extension \#7: ---. Probability: ---.
-#### Extension \#8: ---. Probability: ---.
-#### Extension \#9: ---. Probability: ---.
-#### Extension \#10: ---. Probability: ---.
 
 
 ### Word-pair \#9: --- ---
@@ -144,11 +104,6 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#3: ---. Probability: ---.
 #### Extension \#4: ---. Probability: ---.
 #### Extension \#5: ---. Probability: ---.
-#### Extension \#6: ---. Probability: ---.
-#### Extension \#7: ---. Probability: ---.
-#### Extension \#8: ---. Probability: ---.
-#### Extension \#9: ---. Probability: ---.
-#### Extension \#10: ---. Probability: ---.
 
 
 ### Word-pair \#10: --- ---
@@ -157,11 +112,6 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#3: ---. Probability: ---.
 #### Extension \#4: ---. Probability: ---.
 #### Extension \#5: ---. Probability: ---.
-#### Extension \#6: ---. Probability: ---.
-#### Extension \#7: ---. Probability: ---.
-#### Extension \#8: ---. Probability: ---.
-#### Extension \#9: ---. Probability: ---.
-#### Extension \#10: ---. Probability: ---.
 
 
 
