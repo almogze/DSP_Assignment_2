@@ -11,24 +11,12 @@ public class Main {
 
     public static void main(String[] args){
 
-        // Regarding "CredentialsProvider" (used by Meni) - I don't think we need it, but if we do
-        // It's not that hard to add I think, just be aware that we may need it.
-
         // Bucket name.
         String bucketName = "assignment1razalmog121212";
 
         S3 = S3Client.builder()
                 .region(Region.US_EAST_1)
                 .build();
-
-/*
-        Add this if necessary.
-        //delete the output file if it exist
-        ObjectListing objects = S3.listObjects(bucketName, "outputDSPAss2");
-        for (S3ObjectSummary s3ObjectSummary : objects.getObjectSummaries()) {
-            S3.deleteObject(bucketName, s3ObjectSummary.getKey());
-        }
-*/
 
         System.out.println("Instantiating EMR instance!");
         emr = EmrClient.builder()
