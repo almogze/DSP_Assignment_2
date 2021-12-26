@@ -101,7 +101,7 @@ public class step3 {
     }
     
     public static void main(String[] args) throws Exception {
-		System.out.println("Entered main of step1");
+		System.out.println("Entered main of step3");
 
 
     	Configuration conf = new Configuration();
@@ -115,11 +115,9 @@ public class step3 {
 		job.setPartitionerClass(myPartitioner.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
 		job.setInputFormatClass(SequenceFileInputFormat.class);
-		String output="/output3/";
 		SequenceFileInputFormat.addInputPath(job, new Path(args[1]));
-		FileOutputFormat.setOutputPath(job, new Path(args[2]));
+		FileOutputFormat.setOutputPath(job, new Path("/output_step3/"));
 		job.waitForCompletion(true);
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
 		
 	}
 

@@ -18,18 +18,24 @@ import java.util.List;
 public class step4 {
 	/**
 	 * Input to the mapper:
-	 *       Key: The output of step 2 OR the output of step 3.
-	 *       	  Meaning that the key is a series of 2 or 3 words.
-	 *       Value: The total amount of appearences of these series in the corpus.
+	 *       Key: Key-offset - not interesting for us.
+	 *       Value: The <key, value> pair of step 2 and step 3, which is the total amount of appearances
+	 *       of (w1 w2) or (w1 w2 w3) appropriately in the corpus.
 	 *
 	 * Output of Mapper:
-	 *       Key:
-	 *       Value:
+	 *       Key:   <w1 w2> | <w2 w3>
+	 *       Value: <occurrence_2> | <w1 w2 w3 occurrence_3>
 	 *
 	 * Example input:
-	 *
+	 *          Raz like pizza 10
+     *          Almog love basketball 5
+     *          Beer Sheva 15
 	 * Example output:
-	 *
+	 *          Raz like Raz like pizza 10
+     *          like pizza Raz like pizza 10
+     *          Almog love Almog love basketball 5
+     *          love basketball Almog love basketball 5
+     *          Beer Sheva 15
 	 */
 	private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 		@Override
@@ -68,13 +74,17 @@ public class step4 {
 	 *        Output of mapper.
 	 *
 	 * Output:
-	 *        Key:
-	 *        Value:
+	 *        Key:  <w1 w2 w3>
+	 *        Value: <occurrence_3 w1 w2 occurrence_2>
 	 *
 	 * Example input:
-	 *
+     *          I drink 5
+     *          drink coffee 7
+     *          I drink I drink coffee 10
+     *          drink coffee I drink coffee 10
 	 * Example output:
-	 *
+	 *          I drink coffee 10 I drink 5
+     *          I drink coffee 10 drink coffee 7
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
 
@@ -99,7 +109,7 @@ public class step4 {
 			for (Text val : values) {
 
 				String[] v = val.toString().split(" ");
-				// If we don't have the amount of occurences of w1, w2 --> We save the value in our list (ArrayList)
+				// If we don't have the amount of occurrences of w1, w2 --> We save the value in our list (ArrayList)
 				// and keep looking.
 				if (!found){
 					if (v.length == 1) {
@@ -128,17 +138,16 @@ public class step4 {
 						savedVals.add(val.toString());
 					}
 				}
-				// We have the amount of occurances of the two words w1, w2 --> Can just send the desired <key, value>
+				// We have the amount of occurrences of the two words w1, w2 --> Can just send the desired <key, value>
 				// to the context.
 				else{
-					// Just send to context <"w1 w2 w3", "occ3 w1 w2 (occ_w1w2)">
+					// Just send to context <"w1 w2 w3", "occ3 w1 w2 occ_2">
 					String[] vs = val.toString().split(" ");
 					newKey = new Text(String.format("%s %s %s", vs[0], vs[1], vs[2]));
 					// New value: occ3, w1, w2, occ2
 					newVal = new Text(String.format("%s %s %s %d", vs[3], w1, w2, occ2));
 					context.write(newKey, newVal);
 				}
-
 			}
 		}
 	}
@@ -153,9 +162,7 @@ public class step4 {
 	    }
 	    
 	    public static void main(String[] args) throws Exception {
-			System.out.println("Entered main of step1");
-
-
+			System.out.println("Entered main of step4");
 			Configuration conf = new Configuration();
 			Job job = Job.getInstance(conf, "Aggregate 2 and 3");
 			job.setJarByClass(step4.class);
@@ -165,12 +172,9 @@ public class step4 {
 			job.setOutputValueClass(Text.class);
 			job.setPartitionerClass(myPartitioner.class);
 			job.setOutputFormatClass(TextOutputFormat.class);
-			String input1="/output2/";
-			String input2="/output3/";
-			String output="/output4/";
-			MultipleInputs.addInputPath(job, new Path("s3://assignment1razalmog121212/output/2gram/"), TextInputFormat.class);
-			MultipleInputs.addInputPath(job, new Path("s3://assignment1razalmog121212/output/3gram/"), TextInputFormat.class);
-			FileOutputFormat.setOutputPath(job, new Path(output));
+			MultipleInputs.addInputPath(job, new Path("/output_step2/"), TextInputFormat.class);
+			MultipleInputs.addInputPath(job, new Path("/output_step3/"), TextInputFormat.class);
+			FileOutputFormat.setOutputPath(job, new Path("/output_step4/"));
 			job.waitForCompletion(true);
 		}
 

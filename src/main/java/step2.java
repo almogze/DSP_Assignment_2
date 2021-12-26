@@ -92,9 +92,7 @@ public class step2 {
 	}
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("Entered main of step1");
-
-
+		System.out.println("Entered main of step2");
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "2gram");
 		job.setJarByClass(step2.class);
@@ -106,11 +104,9 @@ public class step2 {
 		job.setPartitionerClass(myPartitioner.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
 		job.setInputFormatClass(SequenceFileInputFormat.class);
-		String output="/output2/";
 		SequenceFileInputFormat.addInputPath(job, new Path(args[1]));
-		FileOutputFormat.setOutputPath(job, new Path(args[2]));
+		FileOutputFormat.setOutputPath(job, new Path("/output_step2/"));
 		job.waitForCompletion(true);
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
 
 
 	}

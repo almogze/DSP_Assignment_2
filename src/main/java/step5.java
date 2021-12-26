@@ -31,11 +31,6 @@ public class step5 {
 	 *
 	 * Output of Mapper:
 	 *        Same as input...
-	 *
-	 * Example input:
-	 *
-	 * Example output:
-	 *
 	 */
 	private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 		@Override
@@ -45,26 +40,6 @@ public class step5 {
 			context.write(new Text(keyVal[0]), new Text(keyVal[1]));
 
 			// This stage essentially is not needed.
-
-
-
-			/*
-
-			if(oldVal.length>1){
-				occur = Integer.parseInt(oldVal[2]);
-				Text text2 = new Text(String.format("%s %s %d",oldVal[0],oldVal[1],occur));
-				// text2.set(String.format("%s %s %d",words2[0],words2[1],occur));
-				context.write(text, text2);
-			}
-			else{
-				occur= Integer.parseInt(keyVal[1]) ;
-				Text text1 = new Text(String.format("%d",occur));
-				// text1.set(String.format("%d",occur));
-				context.write(text ,text1);
-			}
-			 */
-
-
 		}
 	}
 
@@ -75,13 +50,13 @@ public class step5 {
 	 *        Value: "occ3, w1, w2, occ2" or "occ3, w2, w3, occ2"
 	 *
 	 * Output:
-	 *        Key:
-	 *        Value:
+	 *        Key: <w1 w2 w3>
+	 *        Value: <probability>
 	 *
 	 * Example input:
-	 *
+	 *			How are you 10 are you 5
 	 * Example output:
-	 *
+	 *			How are you 0.2341
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
 		public static Long C0 = 0L;
@@ -90,7 +65,7 @@ public class step5 {
 
 		public void setup(Reducer.Context context) throws IOException {
 			FileSystem fileSystem = FileSystem.get(context.getConfiguration());
-			RemoteIterator<LocatedFileStatus> it=fileSystem.listFiles(new Path("/output1"),false);
+			RemoteIterator<LocatedFileStatus> it=fileSystem.listFiles(new Path("/output_step1"),false);
 			while(it.hasNext()){
 				LocatedFileStatus fileStatus=it.next();
 				if (fileStatus.getPath().getName().startsWith("part")){
@@ -131,85 +106,54 @@ public class step5 {
 		@Override
 		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 			try{
+
 				String[] strings = key.toString().split(" ");
 				String w1 = strings[0];
 				String w2 = strings[1];
 				String w3= strings[2];
 
+				Double N3 = -1.0;
+				Double N2 = 0.0;
+				Double N1 = 0.0;
+				Double C1 = 0.0;
+				Double k2 = 0.0;
+				Double k3 = 0.0;
+				Double C2 = 0.0;
+				Double prob = 0.0;
 
+				N1 = singles.get(w3);
+				C1 = singles.get(w2);
 
-			Double N3 = -1.0;
-			Double N2 = 0.0;
-			Double N1 = 0.0;
-			Double C1 = 0.0;
-			Double k2 = 0.0;
-			Double k3 = 0.0;
-			Double C2 = 0.0;
-			Double prob = 0.0;
+				for (Text val : values){
+					String[] vals = val.toString().split(" ");
 
-			N1 = singles.get(w3);
-			C1 = singles.get(w2);
+					if (N3 < 0)
+						N3 = Double.parseDouble(vals[0]);
 
-			for (Text val : values){
-				String[] vals = val.toString().split(" ");
-
-				if (N3 < 0)
-					N3 = Double.parseDouble(vals[0]);
-
-				if (vals[1].equals(w1) && vals[2].equals(w2)){
-					C2 = Double.parseDouble(vals[3]);
-					k3 = (Math.log(N3 + 1) + 1) / (Math.log(N3 + 1) + 2);
+					if (vals[1].equals(w1) && vals[2].equals(w2)){
+						C2 = Double.parseDouble(vals[3]);
+						k3 = (Math.log(N3 + 1) + 1) / (Math.log(N3 + 1) + 2);
+					}
+					else if (vals[1].equals(w2) && vals[2].equals(w3)){
+						N2 = Double.parseDouble(vals[3]);
+						k2 = (Math.log(N2 + 1) + 1) / (Math.log(N2 + 1) + 2);
+					}
+					else
+						System.out.println("Something weird happend!!! Got w1 w2 that do not match w1 w2 w3 :(");
 				}
-				else if (vals[1].equals(w2) && vals[2].equals(w3)){
-					N2 = Double.parseDouble(vals[3]);
-					k2 = (Math.log(N2 + 1) + 1) / (Math.log(N2 + 1) + 2);
+				if (C2 == 0 || C1 == 0 || C0 == 0){
+					System.out.println("One of the C's is zero!!");
+					prob = 0.0;
 				}
 				else
-					System.out.println("Something weird happend!!! Got w1 w2 that do not match w1 w2 w3 :(");
-
-				prob = (k3 * (N3 / C2)) + ((1 - k3) * k2 * (N2 / C1)) + ((1 - k3) * (1 - k2) * (N1/C0));
-
+					prob = (k3 * (N3 / C2)) + ((1 - k3) * k2 * (N2 / C1)) + ((1 - k3) * (1 - k2) * (N1/C0));
 				Text newKey = new Text(key.toString());
 				Text newVal = new Text(prob.toString());
 				context.write(newKey, newVal);
-
-
-
-			}
 			}catch (Exception e){
 				System.out.println("Problem with reduce");
 				e.printStackTrace();
 			}
-			/*
-
-
-			for (Text val : values) {
-				String[] s = val.toString().split(" ");
-				if(s.length<2){
-					N3=(double) Long.parseLong(s[0]);
-					k3=(Math.log(N3+1)+1)/(Math.log(N3+1)+2);
-				}
-				else{
-					if(s[0].equals(w1)&&s[1].equals(w2)){
-						C2=(double) Long.parseLong(s[2]);
-						b1=true;
-					}
-					else{
-						if(s[0].equals(w2)&&s[1].equals(w3))
-							N2=(double) Long.parseLong(s[2]);
-						k2=(Math.log(N2+1)+1)/(Math.log(N2+1)+2);
-						b2=true;
-					}
-				}
-				if(C1!=null && N1!=null && b1 && b2){
-					prob=(k3*(N3/C2))+((1-k3)*k2*(N2/C1))+((1-k3)*(1-k2)*(N1/c0));
-					newKey.set(String.format("%s %s %s",w1,w2,w3));
-					newVal.set(String.format("%s",prob));
-					context.write(newKey, newVal);
-				}
-			}
-		 	*/
-
 		}
 
 		// Add cleanup function (Do we need to?).
@@ -226,8 +170,7 @@ public class step5 {
 
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("Entered main of step1");
-
+		System.out.println("Entered main of step5");
 
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "Probability calculation");
@@ -239,16 +182,8 @@ public class step5 {
 		job.setPartitionerClass(myPartitioner.class);
 		job.setInputFormatClass(TextInputFormat.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
-		/*
-		String input2="/output3/";
-		MultipleInputs.addInputPath(job, new Path(input1), TextInputFormat.class);
-		MultipleInputs.addInputPath(job, new Path(input2), TextInputFormat.class);
-		 */
-		String input1="/output4/";
-		String output="/output5/";
-		FileInputFormat.addInputPath(job, new Path(input1));
-		FileOutputFormat.setOutputPath(job, new Path(output));
+		FileInputFormat.addInputPath(job, new Path("/output_step4/"));
+		FileOutputFormat.setOutputPath(job, new Path("/output_step5/"));
 		job.waitForCompletion(true);
 	}
-
 }
