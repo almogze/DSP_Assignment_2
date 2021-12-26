@@ -1,3 +1,3 @@
-##Assignment 2 of Distributed Systems Programming course.
+# Assignment 2 of Distributed Systems Programming course.
 
 
