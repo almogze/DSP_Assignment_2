@@ -34,9 +34,12 @@ Step 6: --.
 ## Analysis:
 We choose 10 interesting words, and show their top-5 next words.
 
-### Word-pair \#1: sdf asf
-sd
-asdf
+### Word-pair \#1: --- ---
+#### Extension \#1: ---. Probability: ---.
+#### Extension \#2: ---. Probability: ---.
+#### Extension \#3: ---. Probability: ---.
+
+
 
 
 **We can see that the system indeed retreived a reasonable result for these combinations.**
