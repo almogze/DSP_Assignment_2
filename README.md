@@ -19,19 +19,41 @@ Step 6: 2802697.
 
 ### Without local aggregation:
 Step 1: --.
+
 Step 2: --.
+
 Step 3: --.
+
 Step 4: --.
+
 Step 5: --.
+
 Step 6: --.
 
 
 ## Analysis:
 We choose 10 interesting words, and show their top-5 next words.
 
+### Word-pair \#1: sdf asf
+sd
+asdf
 
 
 **We can see that the system indeed retreived a reasonable result for these combinations.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
