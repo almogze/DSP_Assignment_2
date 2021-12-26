@@ -38,11 +38,125 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#1: ---. Probability: ---.
 #### Extension \#2: ---. Probability: ---.
 #### Extension \#3: ---. Probability: ---.
+#### Extension \#4: ---. Probability: ---.
+#### Extension \#5: ---. Probability: ---.
+#### Extension \#6: ---. Probability: ---.
+#### Extension \#7: ---. Probability: ---.
+#### Extension \#8: ---. Probability: ---.
+#### Extension \#9: ---. Probability: ---.
+#### Extension \#10: ---. Probability: ---.
+
+### Word-pair \#2: --- ---
+#### Extension \#1: ---. Probability: ---.
+#### Extension \#2: ---. Probability: ---.
+#### Extension \#3: ---. Probability: ---.
+#### Extension \#4: ---. Probability: ---.
+#### Extension \#5: ---. Probability: ---.
+#### Extension \#6: ---. Probability: ---.
+#### Extension \#7: ---. Probability: ---.
+#### Extension \#8: ---. Probability: ---.
+#### Extension \#9: ---. Probability: ---.
+#### Extension \#10: ---. Probability: ---.
+
+### Word-pair \#3: --- ---
+#### Extension \#1: ---. Probability: ---.
+#### Extension \#2: ---. Probability: ---.
+#### Extension \#3: ---. Probability: ---.
+#### Extension \#4: ---. Probability: ---.
+#### Extension \#5: ---. Probability: ---.
+#### Extension \#6: ---. Probability: ---.
+#### Extension \#7: ---. Probability: ---.
+#### Extension \#8: ---. Probability: ---.
+#### Extension \#9: ---. Probability: ---.
+#### Extension \#10: ---. Probability: ---.
+
+### Word-pair \#4: --- ---
+#### Extension \#1: ---. Probability: ---.
+#### Extension \#2: ---. Probability: ---.
+#### Extension \#3: ---. Probability: ---.
+#### Extension \#4: ---. Probability: ---.
+#### Extension \#5: ---. Probability: ---.
+#### Extension \#6: ---. Probability: ---.
+#### Extension \#7: ---. Probability: ---.
+#### Extension \#8: ---. Probability: ---.
+#### Extension \#9: ---. Probability: ---.
+#### Extension \#10: ---. Probability: ---.
+
+### Word-pair \#5: --- ---
+#### Extension \#1: ---. Probability: ---.
+#### Extension \#2: ---. Probability: ---.
+#### Extension \#3: ---. Probability: ---.
+#### Extension \#4: ---. Probability: ---.
+#### Extension \#5: ---. Probability: ---.
+#### Extension \#6: ---. Probability: ---.
+#### Extension \#7: ---. Probability: ---.
+#### Extension \#8: ---. Probability: ---.
+#### Extension \#9: ---. Probability: ---.
+#### Extension \#10: ---. Probability: ---.
+
+### Word-pair \#6: --- ---
+#### Extension \#1: ---. Probability: ---.
+#### Extension \#2: ---. Probability: ---.
+#### Extension \#3: ---. Probability: ---.
+#### Extension \#4: ---. Probability: ---.
+#### Extension \#5: ---. Probability: ---.
+#### Extension \#6: ---. Probability: ---.
+#### Extension \#7: ---. Probability: ---.
+#### Extension \#8: ---. Probability: ---.
+#### Extension \#9: ---. Probability: ---.
+#### Extension \#10: ---. Probability: ---.
+
+### Word-pair \#7: --- ---
+#### Extension \#1: ---. Probability: ---.
+#### Extension \#2: ---. Probability: ---.
+#### Extension \#3: ---. Probability: ---.
+#### Extension \#4: ---. Probability: ---.
+#### Extension \#5: ---. Probability: ---.
+#### Extension \#6: ---. Probability: ---.
+#### Extension \#7: ---. Probability: ---.
+#### Extension \#8: ---. Probability: ---.
+#### Extension \#9: ---. Probability: ---.
+#### Extension \#10: ---. Probability: ---.
+
+### Word-pair \#8: --- ---
+#### Extension \#1: ---. Probability: ---.
+#### Extension \#2: ---. Probability: ---.
+#### Extension \#3: ---. Probability: ---.
+#### Extension \#4: ---. Probability: ---.
+#### Extension \#5: ---. Probability: ---.
+#### Extension \#6: ---. Probability: ---.
+#### Extension \#7: ---. Probability: ---.
+#### Extension \#8: ---. Probability: ---.
+#### Extension \#9: ---. Probability: ---.
+#### Extension \#10: ---. Probability: ---.
+
+### Word-pair \#9: --- ---
+#### Extension \#1: ---. Probability: ---.
+#### Extension \#2: ---. Probability: ---.
+#### Extension \#3: ---. Probability: ---.
+#### Extension \#4: ---. Probability: ---.
+#### Extension \#5: ---. Probability: ---.
+#### Extension \#6: ---. Probability: ---.
+#### Extension \#7: ---. Probability: ---.
+#### Extension \#8: ---. Probability: ---.
+#### Extension \#9: ---. Probability: ---.
+#### Extension \#10: ---. Probability: ---.
+
+### Word-pair \#10: --- ---
+#### Extension \#1: ---. Probability: ---.
+#### Extension \#2: ---. Probability: ---.
+#### Extension \#3: ---. Probability: ---.
+#### Extension \#4: ---. Probability: ---.
+#### Extension \#5: ---. Probability: ---.
+#### Extension \#6: ---. Probability: ---.
+#### Extension \#7: ---. Probability: ---.
+#### Extension \#8: ---. Probability: ---.
+#### Extension \#9: ---. Probability: ---.
+#### Extension \#10: ---. Probability: ---.
 
 
 
-
-**We can see that the system indeed retreived a reasonable result for these combinations.**
+**We can see that the system indeed retreived a reasonable result for these combinations!**
 
 
 
