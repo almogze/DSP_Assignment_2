@@ -26,7 +26,7 @@ We choose 10 interesting words, and show their top-5 next words.
 
 
 
-** We can see that the system indeed retreived a reasonable result for these combinations. **
+**We can see that the system indeed retreived a reasonable result for these combinations.**
 
 
 
