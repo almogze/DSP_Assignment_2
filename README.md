@@ -1,2 +1,3 @@
-# DSP_Assignment_2
-Hadoop and EMR
+##Assignment 2 of Distributed Systems Programming course.
+
+
