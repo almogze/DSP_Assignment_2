@@ -4,18 +4,19 @@
 We run the framework once using local aggregation, and once with out, and compare the amount of key-pairs (records) sent from the mappers to the reducers in each stage.
 
 ### With local aggregation:
-We depict the amount of records sent from the mapper to the reducer in each step:
-Step 1: 88800980.
+We depict the amount of records sent from the mapper to the reducer in each step, and their size:
 
-Step 2: 233334882.
+Step 1: Amount of records: 645290. Size (in bytes): 7222616.
 
-Step 3: 119255104.
+Step 2: Amount of records: 4758948. Size (in bytes): 64506969.
 
-Step 4: 10366794.
+Step 3: Amount of records: 2804000. Size (in bytes): 43595711.
 
-Step 5: 5607919.
+Step 4: Amount of records: 10366794. Size (in bytes): 152420750.
 
-Step 6: 2802697.
+Step 5: Amount of records: 5607919. Size (in bytes): 123103523.
+
+Step 6: Amount of records: 2802697. Size (in bytes): 76581507.
 
 ### Without local aggregation:
 Step 1: 88800980.
