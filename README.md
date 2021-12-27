@@ -5,7 +5,7 @@ Down bellow we present the job flow of our map - reduce program:
 
 ![שקופית2](https://user-images.githubusercontent.com/73799544/147504730-89a6c46a-1f36-4c0b-a275-b6f7739876f4.JPG)
 
-Steps 1,2 and 3 get as input the corpus of 1,2 and 3 hebrew gram respectivily. Steps 4 - 6 are also depict bellow
+Steps 1,2 and 3 get as an input the corpus of 1,2 and 3 hebrew gram respectivily. Steps 4 - 6 are depict bellow
 
 ![שקופית1](https://user-images.githubusercontent.com/73799544/147505002-157ace9a-eb9c-4433-a739-eb6f4d1d0a79.JPG)
 
@@ -29,17 +29,17 @@ Step 5: Amount of records: 5607919. Size (in bytes): 123103523.
 Step 6: Amount of records: 2802697. Size (in bytes): 76581507.
 
 ### Without local aggregation:
-Step 1: 88800980.
+Step 1: Amount of records: 88800980. Size (in bytes): 237457060.
 
-Step 2: --.
+Step 2: Amount of records: 233334882. Size (in bytes): 725775646.
 
-Step 3: --.
+Step 3: Amount of records: 119255104. Size (in bytes): 382968024.
 
-Step 4: --.
+Step 4: Amount of records: 10366794. Size (in bytes): 152420750.
 
-Step 5: --.
+Step 5: Amount of records: 5607919. Size (in bytes): 123103523.
 
-Step 6: --.
+Step 6: Amount of records: 2802697. Size (in bytes): 76581507.
 
 
 ## Analysis:
