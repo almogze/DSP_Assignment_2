@@ -1,5 +1,15 @@
 # **Assignment 2 of Distributed Systems Programming course.**
 
+## Job Flow
+Down bellow we present the job flow of our map - reduce program:
+
+![שקופית2](https://user-images.githubusercontent.com/73799544/147504730-89a6c46a-1f36-4c0b-a275-b6f7739876f4.JPG)
+
+Steps 1,2 and 3 get as input the corpus of 1,2 and 3 hebrew gram respectivily. Steps 4 - 6 are also depict bellow
+
+![שקופית1](https://user-images.githubusercontent.com/73799544/147504871-4d43c9d2-d66e-4bc3-bbd8-a8a7aa67fb8e.JPG)
+
+
 ## Statistics:
 We run the framework once using local aggregation, and once with out, and compare the amount of key-pairs (records) sent from the mappers to the reducers in each stage.
 
