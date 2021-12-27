@@ -1,7 +1,7 @@
 # **Assignment 2 of Distributed Systems Programming course.**
 
 ## Job Flow
-Down bellow we present the job flow of our **Map - Reduce** program:
+Bellow we present the job flow of our **Map - Reduce** program:
 
 ![שקופית2](https://user-images.githubusercontent.com/73799544/147504730-89a6c46a-1f36-4c0b-a275-b6f7739876f4.JPG)
 
