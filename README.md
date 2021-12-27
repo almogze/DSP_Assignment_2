@@ -18,7 +18,7 @@ Step 5: 5607919.
 Step 6: 2802697.
 
 ### Without local aggregation:
-Step 1: --.
+Step 1: 88800980.
 
 Step 2: --.
 
