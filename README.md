@@ -4,7 +4,7 @@
 
 Our goal is to calculate the conditional probability of word3 to be found after word1 and word2 in Hebrew 3 - Gram.
 
-The equation we follow suggested by Thede & Harper and shown bellow:
+The equation we follow suggested by Thede & Harper is shown bellow:
 
 ![Thede and Harper equation](https://user-images.githubusercontent.com/73799544/147606014-a25178a9-1847-4edb-ad2f-fb9a7b7340a2.jpg)
 
