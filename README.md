@@ -1,5 +1,21 @@
 # **Assignment 2 of Distributed Systems Programming course.**
 
+# Project Goal
+
+Our goal is to calculate the conditional probability of word3 to be found after word1 and word2 in Hebrew 3 - Gram.
+
+The equation we follow suggested by Thede & Harper and shown bellow:
+
+![Thede and Harper equation](https://user-images.githubusercontent.com/73799544/147606014-a25178a9-1847-4edb-ad2f-fb9a7b7340a2.jpg)
+
+where
+- N1 is the number of times w3 occurs.
+- N2 is the number of times sequence (w2,w3) occurs.
+- N3 is the number of times sequence (w1,w2,w3) occurs.
+- C0 is the total number of word instances in the corpus.
+- C1 is the number of times w2 occurs.
+- C2 is the number of times sequence (w1,w2) occurs.
+
 ## Job Flow
 Bellow we present the job flow of our **Map - Reduce** program:
 
