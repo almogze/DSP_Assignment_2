@@ -31,10 +31,6 @@ public class step1 {
      *        Value: The total amount of times it appears in the corpus.
      *
      *        Notice that this is practically word-count.
-     *
-     *	Example input:
-     *
-     * 	Example output:
      */
     private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 
@@ -43,32 +39,16 @@ public class step1 {
             String[] vals = value.toString().split("\t");
             String w1 = vals[0];
 
-            System.out.println(w1);     // Check if this is also a tuple or just a word (we think it's a word)
-
             Text text = new Text(w1);
-            // text.set(w1);
             Text occurences = new Text(vals[2]);
-            // occurences.set(vals[2]);
             Text text2 = new Text("*");
-            // text2.set("*");
+
             context.write(text,occurences);
             context.write(text2,occurences);
         }
     }
 
-    /**
-     * Input:
-     *        Output of mapper.
-     *
-     * Output:
-     *        Key:
-     *        Value:
-     *
-     * Example input:
-     *
-     * Example output:
-     *
-     */
+
     private static class Reduce extends Reducer<Text, Text, Text, Text> {
         @Override
         protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
@@ -79,9 +59,7 @@ public class step1 {
             }
 
             Text newVal = new Text(String.format("%d",sumOccurences));
-            // newVal.set(String.format("%d",sumOccurences));
-
-            // We send the same key, with the total amount of it's appearences in the corpus.
+            // Send the same key, with the total amount of it's appearences in the corpus.
             context.write(key, newVal);
         }
     }
@@ -96,6 +74,7 @@ public class step1 {
 
     public static void main(String[] args) throws Exception, ClassNotFoundException, InterruptedException  {
         System.out.println("Entered main of step1");
+
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "1gram");
         job.setJarByClass(step1.class);

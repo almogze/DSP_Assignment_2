@@ -29,8 +29,6 @@ public class step5 {
 	 *        				occ3 - The amount of appearances of "w1, w2, w3" in the corpus.
 	 *        				occ2 - The amount of appearances of "w1, w2" or "w2 w3" in the corpus.
 	 *
-	 * Output of Mapper:
-	 *        Same as input...
 	 */
 	private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 		@Override
@@ -38,8 +36,6 @@ public class step5 {
 			String[] keyVal = value.toString().split("\t");
 
 			context.write(new Text(keyVal[0]), new Text(keyVal[1]));
-
-			// This stage essentially is not needed.
 		}
 	}
 
@@ -155,8 +151,6 @@ public class step5 {
 				e.printStackTrace();
 			}
 		}
-
-		// Add cleanup function (Do we need to?).
 
 	}
 

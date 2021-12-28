@@ -35,7 +35,7 @@ public class step6 {
 
         @Override
         public void map (LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
-        	// Move value to key --> Get right order of output display.
+        	// Move value to key --> So the compare function will be able to sort, giving the wanted output.
             String[] keyVal = value.toString().split("\t");
             Text key1 = new Text(String.format("%s %s",keyVal[0],keyVal[1]));
             Text newValue = new Text("");
@@ -50,10 +50,6 @@ public class step6 {
 	 * Output:
 	 *        Key: (w1 w2 w3 prob)
 	 *        Value: ""
-	 *
-	 * Example input:
-	 *
-	 * Example output:
 	 *
 	 */
 
@@ -83,7 +79,6 @@ public class step6 {
 	                        return 1;
 	                }
 	            return (key1.toString().compareTo(key2.toString()));
-	            // return (splits1[0]+" "+splits1[1]).compareTo(splits2[0]+" "+splits2[1]);
 
 	            }
 	        }

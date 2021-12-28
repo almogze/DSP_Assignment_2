@@ -44,28 +44,24 @@ public class step4 {
 
 			String[] words = keyVal[0].split(" ");
 			String w1 = words[0];
-			String w2 = words[1];   
-
-			// int occ = Integer.parseInt(keyVal[1]);
+			String w2 = words[1];
 			String occ = keyVal[1];
-			Text occurs = new Text(occ);
-			// occurs.set(String.format("%d",occ));
 
+			Text occurs = new Text(occ);
 			Text firstTwo = new Text(String.format("%s %s",w1,w2));
-			// firstTwo.set(String.format("%s %s",w1,w2));
 
 			if(words.length>2){
 				String w3 = words[2];
+
 				Text newVal = new Text(String.format("%s %s %s %s",w1,w2,w3,occ));
-				// t.set(String.format("%s %s %s %d",w1,w2,w3,occ));
 				Text lastTwo = new Text(String.format("%s %s",w2,w3));
-				// lastTwo.set(String.format("%s %s",w2,w3));
+
 				context.write(firstTwo, newVal);
 				context.write(lastTwo, newVal);
 			}
-			else{
-			context.write(firstTwo ,occurs);
-			}
+			else
+				context.write(firstTwo ,occurs);
+
 		}
 	}
 
@@ -85,6 +81,7 @@ public class step4 {
 	 * Example output:
 	 *          I drink coffee 10 I drink 5
      *          I drink coffee 10 drink coffee 7
+	 *
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
 
@@ -92,6 +89,8 @@ public class step4 {
 		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 			// We wish to save a local ArrayList<String> that will hold the values received in the reduce procedure,
 			// until we find the amount of occurrences of "w1 w2" in the corpus.
+			// After finding, we send all the key-values related to the data saved in the local memory, and free that memory.
+			// All next values, will not be saved in the local memory, but rather directly sent to the context.
 
 			List<String> savedVals = new ArrayList<>();
 
@@ -155,7 +154,6 @@ public class step4 {
 	  private static class myPartitioner extends Partitioner<Text, Text>{
 			@Override
 			public int getPartition(Text key, Text value, int numPartitions){
-				
 				return Math.abs(key.hashCode()) % numPartitions;
 			}
 	    	
@@ -163,6 +161,7 @@ public class step4 {
 	    
 	    public static void main(String[] args) throws Exception {
 			System.out.println("Entered main of step4");
+
 			Configuration conf = new Configuration();
 			Job job = Job.getInstance(conf, "Aggregate 2 and 3");
 			job.setJarByClass(step4.class);

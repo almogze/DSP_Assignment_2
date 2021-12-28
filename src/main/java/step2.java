@@ -26,11 +26,6 @@ public class step2 {
 	 *        Key: The word.
 	 *        Value: The amount of times it appeares in the year of this record.
 	 *
-	 *
-	 * Example input:
-	 *
-	 * Example output:
-	 *
 	 */
 	private static class Map extends Mapper<LongWritable, Text, Text, Text> {
 
@@ -42,9 +37,7 @@ public class step2 {
 				String w1 = words[0];
 				String w2 = words[1];
 				Text text = new Text(String.format("%s %s",w1,w2));
-				// text.set(String.format("%s %s",w1,w2));
 				Text occurrences = new Text(vals[2]);
-				// occurrences.set(vals[2]);
 				context.write(text ,occurrences);
 			}
 		}
@@ -56,14 +49,10 @@ public class step2 {
 	 *        Output of mapper.
 	 *
 	 * Output:
-	 *        Key: a pair of words (sepparated by a whitespace).
+	 *        Key: a pair of words (separated by a whitespace).
 	 *        Value: The total amount of times it appears in the corpus.
 	 *
 	 *        Notice that this is practically word-count.
-	 *
-	 * Example input:
-	 *
-	 * Example output:
 	 *
 	 */
 	public static class Reduce extends Reducer<Text, Text, Text, Text> {
@@ -76,8 +65,6 @@ public class step2 {
 			}
 
 			Text newVal = new Text(String.format("%d",sumOccurrences));
-			// newVal.set(String.format("%d",sumOccurrences));
-
 			// We send the same key, with the total amount of it's appearences in the corpus.
 			context.write(key, newVal);
 		}
@@ -93,6 +80,7 @@ public class step2 {
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Entered main of step2");
+
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "2gram");
 		job.setJarByClass(step2.class);

@@ -51,9 +51,7 @@ public class step3 {
 				String w2 = words[1];
 				String w3= words[2];
 				Text text = new Text(String.format("%s %s %s",w1,w2,w3));
-				// text.set(String.format("%s %s %s",w1,w2,w3));
 				Text occurs = new Text(vals[2]);
-				// occurs.set(vals[2]);
 				context.write(text ,occurs);
             }
         }
@@ -70,10 +68,6 @@ public class step3 {
 	 *
 	 *        Notice that this is practically word-count.
 	 *
-	 * Example input:
-	 *
-	 * Example output:
-	 *
 	 */
     public static class Reduce extends Reducer<Text, Text, Text, Text> {
 
@@ -85,9 +79,7 @@ public class step3 {
 			}
 
 			Text newVal = new Text(String.format("%d",sumOccurrences));
-			// newVal.set(String.format("%d",sumOccurrences));
-
-			// We send the same key, with the total amount of it's appearences in the corpus.
+			// We send the same key, with the total amount of it's appearances in the corpus.
 			context.write(key, newVal);
     	}
     }
@@ -102,7 +94,6 @@ public class step3 {
     
     public static void main(String[] args) throws Exception {
 		System.out.println("Entered main of step3");
-
 
     	Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "3gram");

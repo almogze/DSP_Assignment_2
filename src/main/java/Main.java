@@ -31,7 +31,6 @@ public class Main {
 
         HadoopJarStepConfig step1 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step1.jar")
-                //.mainClass(myClass)
                 .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data" , "s3://" + bucketName + "/output/1gram")
                 .mainClass("step1")
                 .build();
@@ -109,7 +108,7 @@ public class Main {
                 .build();
 		/*
         step 6
-        Sort the order of appearence of the output file, as requested.
+        Sort the order of appearance of the output file, as requested.
 		 */
         HadoopJarStepConfig step6 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step6.jar")
@@ -138,7 +137,6 @@ public class Main {
                 .name("DSP_Ass_2")
                 .instances(instances)
                 .steps(stepOne,stepTwo,stepThree,stepFour,stepFive,stepSix)
-                //.steps(stepOne, stepFour, stepFive, stepSix)
                 .logUri("s3n://" + bucketName + "/logs/")
                 .serviceRole("EMR_DefaultRole")
                 .jobFlowRole("EMR_EC2_DefaultRole")
