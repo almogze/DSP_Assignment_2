@@ -7,7 +7,7 @@ Bellow we present the job flow of our **Map - Reduce** program:
 
 Steps 1,2 and 3 get as an input the corpus of 1,2 and 3 hebrew gram respectivily. Steps 4 - 6 are depicted bellow
 
-![שקופית1](https://user-images.githubusercontent.com/73799544/147505002-157ace9a-eb9c-4433-a739-eb6f4d1d0a79.JPG)
+![שקופית1](https://user-images.githubusercontent.com/73799544/147597826-4db6c722-f566-422a-95ec-afbeb14dbcd4.JPG)
 
 
 ## Statistics:
