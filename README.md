@@ -3,7 +3,7 @@
 ## Job Flow
 Bellow we present the job flow of our **Map - Reduce** program:
 
-![שקופית2](https://user-images.githubusercontent.com/73799544/147504730-89a6c46a-1f36-4c0b-a275-b6f7739876f4.JPG)
+![שקופית2](https://user-images.githubusercontent.com/73799544/147598085-a80eba63-4c85-4614-b706-1958c41b229b.JPG)
 
 Steps 1,2 and 3 get as an input the corpus of 1,2 and 3 hebrew gram respectivily. Steps 4 - 6 are depicted bellow
 
