@@ -1,5 +1,10 @@
 # **Assignment 2 of Distributed Systems Programming course.**
 
+Submitting:
+
+Raz Monsonego: 313292120
+Almog Zemach: 205789005
+
 # Project Goal
 
 Our goal is to calculate the conditional probability of word3 to be found after word1 and word2 in Hebrew 3 - Gram corpus.
