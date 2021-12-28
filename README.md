@@ -25,6 +25,18 @@ Steps 1,2 and 3 get as an input the corpus of 1,2 and 3 hebrew gram respectivily
 
 ![שקופית1](https://user-images.githubusercontent.com/73799544/147597966-b88cf8d5-9b26-4f21-a406-d8ee98693635.JPG)
 
+## Run time
+We present here running time we had for several sessions:
+
+![elapsed time 2](https://user-images.githubusercontent.com/73799544/147607698-d918d5d8-1008-4add-a117-14dbf3d10763.jpg)
+
+### with local aggregation
+![elapsed time 1](https://user-images.githubusercontent.com/73799544/147607629-bd155fe3-a5de-4b2a-8b83-733d24ac76c9.jpg)
+
+### without local aggregation
+![elapsed time 3](https://user-images.githubusercontent.com/73799544/147607810-92076bbc-b27a-4c17-97fa-56e6c20df65a.jpg)
+
+First of all we can see that there is a huge difference between the time we run those session. And in particular, running in GMT +2 hours (i.e Time Zone in Jerusalem, Israel) at morning is much faster compere to the evening sessions. Thats probably because at evening is the day time in the US and there is alot of traffic in the newtwork.
 
 ## Statistics:
 We run the framework once using local aggregation, and once with out, and compare the amount of key-pairs (records) sent from the mappers to the reducers in each stage.
@@ -133,7 +145,6 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#5:   חמש ---> Probability: 0.009176709777924601.
 
 **We can see that the system indeed retreived a reasonable result for these combinations!**
-
 
 
 
