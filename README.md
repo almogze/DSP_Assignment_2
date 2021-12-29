@@ -42,7 +42,7 @@ We present here running time we had for several sessions:
 ### without local aggregation
 ![elapsed time 3](https://user-images.githubusercontent.com/73799544/147607810-92076bbc-b27a-4c17-97fa-56e6c20df65a.jpg)
 
-First of all we can see that there is a huge difference between the hour in which we ran the application. And in particular, running in GMT +2 hours (i.e Time Zone in Jerusalem, Israel) at morning is much faster compere to the evening sessions. Thats probably because that at evening is the day time in the US and there is alot of traffic in the newtwork.
+First of all we can see that there is a huge difference between the hour in which we ran the application. And in particular, running in GMT +2 hours (i.e Time Zone in Jerusalem, Israel) at morning is much faster compere to the evening sessions. Thats probably because that at evening is the day time in the US and there is alot of traffic in the network.
 Second, there is not major effect on running time between local aggregation and without(differ from the memory usage, which have a big difference).
 ## Statistics:
 We run the framework once using local aggregation, and once with out, and compare the amount of key-pairs (records) sent from the mappers to the reducers in each stage.
