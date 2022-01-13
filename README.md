@@ -22,6 +22,10 @@ where
 - C1 is the number of times w2 occurs.
 - C2 is the number of times sequence (w1,w2) occurs.
 
+## How to run the project:
+In order to run this project - you must put the project files in a maven project, upload the steps to S3 memory (with the same bucket-name as in the project - see AWSBundle), and run the following command: mvn exec:java -Dexec.mainClass="Main".
+This will invoke the whole job-flow and run the EMR instance.
+
 ## Job Flow
 Bellow we present the job flow of our **Map - Reduce** program:
 
