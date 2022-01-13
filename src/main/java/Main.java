@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        // Bucket name.
+        // Bucket name:
         String bucketName = "razalmog1122";
 
         S3 = S3Client.builder()
@@ -31,7 +31,8 @@ public class Main {
 
         HadoopJarStepConfig step1 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step1.jar")
-                .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data" , "s3://" + bucketName + "/output/1gram")
+                // .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data" , "s3://" + bucketName + "/output/1gram")
+                .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/1gram/data")
                 .mainClass("step1")
                 .build();
 
@@ -47,7 +48,8 @@ public class Main {
 		 */
         HadoopJarStepConfig step2 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step2.jar")
-                .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/2gram/data" , "s3://" + bucketName + "/output/2gram")
+                // .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/2gram/data" , "s3://" + bucketName + "/output/2gram")
+                .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/2gram/data")
                 .mainClass("step2")
                 .build();
 
@@ -62,7 +64,8 @@ public class Main {
 		 */
         HadoopJarStepConfig step3 = HadoopJarStepConfig.builder()
                 .jar("s3://" + bucketName + "/step3.jar")
-                .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/3gram/data" , "s3://" + bucketName + "/output/3gram")
+                // .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/3gram/data" , "s3://" + bucketName + "/output/3gram")
+                .args("s3://datasets.elasticmapreduce/ngrams/books/20090715/heb-all/3gram/data")
                 .mainClass("step3")
                 .build();
 
@@ -74,7 +77,7 @@ public class Main {
 		/*
         step 4
         Join data from step 2 and 3, so that one key (which will be a threesome of
-         words) will have the following data:
+        words) will have the following data:
         1. The amount of times (w1, w2) appeared in the corpus.
         2. The amount of times (w2, w3) appeared in the corpus.
         3. The amount of times (w1, w2, w3) appeared in the corpus.

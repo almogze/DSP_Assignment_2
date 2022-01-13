@@ -40,11 +40,11 @@ public class step1 {
             String w1 = vals[0];
 
             Text text = new Text(w1);
-            Text occurences = new Text(vals[2]);
+            Text occurrences = new Text(vals[2]);
             Text text2 = new Text("*");
 
-            context.write(text,occurences);
-            context.write(text2,occurences);
+            context.write(text,occurrences);
+            context.write(text2,occurrences);
         }
     }
 
@@ -52,14 +52,14 @@ public class step1 {
     private static class Reduce extends Reducer<Text, Text, Text, Text> {
         @Override
         protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-            int sumOccurences = 0;
+            int sumOccurrences = 0;
 
             for (Text occ : values) {
-                sumOccurences += Long.parseLong(occ.toString());
+                sumOccurrences += Long.parseLong(occ.toString());
             }
 
-            Text newVal = new Text(String.format("%d",sumOccurences));
-            // Send the same key, with the total amount of it's appearences in the corpus.
+            Text newVal = new Text(String.format("%d",sumOccurrences));
+            // Send the same key, with the total amount of it's appearances in the corpus.
             context.write(key, newVal);
         }
     }
