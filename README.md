@@ -150,7 +150,7 @@ We choose 10 interesting words, and show their top-5 next words.
 #### Extension \#4:   למעלה ---> Probability: 0.010376770313337115.
 #### Extension \#5:   חמש ---> Probability: 0.009176709777924601.
 
-**We can see that the system indeed retreived a reasonable result for these combinations!**
+**We can see that the system indeed retrieved a reasonable result for these combinations!**
 
 
 
